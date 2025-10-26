@@ -1,33 +1,27 @@
 'use client'
 
+import { BackgroundGrid } from '@/components/background-grid'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/contexts/auth'
 
 export default function Admin() {
-  const { user } = useAuth()
 
-  if (!user) {
-    return null
-  }
-
-  const userProfileUrl = `https://my-links.com/${user.username}`
+  const userProfileUrl = `https://my-links.com/luis.nunnes`
 
   return (
-    <main className="flex flex-col lg:flex-row gap-4 p-4">
-      <div className="flex-1 border rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-        <div>
-          <h2 className="text-xl">Bem-vindo, {user.username}!</h2>
-          <p className="text-zinc-400 mt-2">
-            Gerencie seus links e personalize seu perfil.
-          </p>
-        </div>
+    <main className="relative flex min-h-screen flex-col overflow-hidden lg:flex-row">
+      <div className="relative z-10 flex-1 p-6 bg-zinc-50/50">
+      <BackgroundGrid
+        className="pointer-events-none absolute inset-0 opacity-60"
+        cellSize={20}
+        lineColor="rgba(113, 113, 122, 0.15)"
+      />
+        
       </div>
 
-      <aside className="lg:w-96">
-        <Card>
+      <aside className="relative z-10 p-4 lg:w-96">
+        <Card className="bg-zinc-50">
           <CardHeader>
             <CardTitle>Compartilhe</CardTitle>
             <CardDescription>
@@ -47,6 +41,10 @@ export default function Admin() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="mt-8">
+          <h1 className="font-semibold">Temas recomendados</h1>
+        </div>
       </aside>
     </main>
   )

@@ -14,14 +14,12 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <ProtectedRoute>
-      <SidebarProvider>
-        <AppSidebar />
-        <div className="w-full h-screen overflow-auto">
-          <SidebarTrigger />
-          {children}
-        </div>
-      </SidebarProvider>
-    </ProtectedRoute>
+    <SidebarProvider>
+      <AppSidebar />
+      <div className="w-full h-screen overflow-auto">
+        <SidebarTrigger />
+        {children}
+      </div>
+    </SidebarProvider>
   )
 }

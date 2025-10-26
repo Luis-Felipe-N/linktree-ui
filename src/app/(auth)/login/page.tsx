@@ -56,7 +56,7 @@ export default function Login() {
 
       <div className="text-center mt-4 flex flex-col justify-center h-full max-w-xl mx-auto">
         <h1 className="text-4xl font-bold">Bem vindo de volta</h1>
-        <p className="mt-2 text-zinc-400">Faça login no /my-links</p>
+        <p className="mt-2">Faça login no /my-links</p>
 
         <form
           className="mt-16 text-sm leading-none"
