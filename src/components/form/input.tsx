@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const hasError = !!errors
 
     const baseInputClasses = cn(
-      'transition px-4 h-14 w-full bg-zinc-900 text-zinc-200 rounded-xl focus-within:outline outline-offset-2 outline-2 outline-zinc-100',
+      'transition px-4 h-14 w-full bg-zinc-100 text-zinc-200 rounded-xl focus-within:outline outline-offset-2 outline-2 outline-zinc-100',
       hasError && 'border-2 border-red-600',
       className,
     )

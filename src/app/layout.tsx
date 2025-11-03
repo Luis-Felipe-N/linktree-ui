@@ -1,9 +1,19 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './global.css'
+import localFont from 'next/font/local'
 import { AuthProvider } from '@/contexts/auth'
+import './global.css'
 
-const inter = Inter({ subsets: ['latin'] })
+
+const satoshi = localFont({
+  src: [
+    { path: '../../public/fonts/Satoshi-Regular.woff2', weight: '400', },
+    { path: '../../public/fonts/Satoshi-Medium.woff2', weight: '500', },
+    { path: '../../public/fonts/Satoshi-Black.woff2', weight: '600', },
+    { path: '../../public/fonts/Satoshi-Bold.woff2', weight: '700', },
+  ],
+  variable: '--font-satoshi',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: '/my-links',
@@ -17,7 +27,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>
+      {/* Prefer Satoshi when available, fall back to Inter */}
+      <body className={`${satoshi.className ?? ''}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
