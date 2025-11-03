@@ -4,14 +4,53 @@ import { BackgroundGrid } from '@/components/background-grid'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import ThemeGenerator from '@/components/theme-generator'
+import { cn } from '@/lib/utils'
 import { Copy } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Admin() {
 
   const userProfileUrl = `https://my-links.com/luis.nunnes`
+
+  const APPEARANCE = [
+    {
+      title: 'Estilo do avatar',
+      description: 'Personalize o estilo do seu avatar',
+      styles: [
+        {
+          name: 'square',
+          className: 'rounded-none',
+        },
+        {
+          name: 'rounded-lg',
+          className: 'rounded-lg',
+        },
+        {
+          name: 'rouded',
+          className: 'rounded-full',
+        },
+      ]
+    },
+    {
+      title: 'Estilo do botão',
+      description: 'Personalize o estilo dos botões',
+      styles: [
+        {
+          name: 'square',
+          className: 'rounded-none h-10',
+        },
+        {
+          name: 'rounded-lg',
+          className: 'rounded-lg h-10',
+        },
+        {
+          name: 'rouded',
+          className: 'rounded-full h-10',
+        },
+      ]
+    },
+
+  ]
 
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden lg:flex-row">
@@ -66,14 +105,34 @@ export default function Admin() {
             </div>
           </section>
         </div>
-
       </div>
 
       <aside className="relative z-10 p-4 lg:w-96">
-
-
         <div className="mt-8">
           <h1 className="font-semibold">Temas recomendados</h1>
+
+          <ul className='mt-8'>
+            {APPEARANCE.map((appearance) => (
+              <li key={appearance.title} className="mb-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{appearance.title}</CardTitle>
+                    <CardDescription>{appearance.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-4">
+                      {appearance.styles.map((style) => (
+                        <div key={style.name} className="flex flex-col items-center gap-2">
+                          <div className={cn(`h-16 w-16 bg-zinc-200`, style.className)}></div>
+                          <span className="text-sm">{style.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
         </div>
       </aside>
     </main>
