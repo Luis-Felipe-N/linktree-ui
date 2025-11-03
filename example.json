@@ -1,0 +1,135 @@
+{
+  "data": {
+    "updateAccountAppearance": {
+      "id": 117283681,
+      "uuid": "1c4bcc3c-1547-49f9-98ee-8c1ef79a7b95",
+      "username": "luis.nunes000",
+      "profileToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIxODQ4NTksImV4cCI6MTc2MjE4NTQ1OSwiYXVkIjoibGlua3RyLmVlIiwic3ViIjoibGlua3RyLmVlIiwiaXNzIjoibGlua3RyLmVlIiwicHJvZmlsZU5hbWUiOiJsdWlzLm51bmVzMDAwIn0.Oz62Yhg0BtGGo4XZIsOpj25aPRPLnH_PWb80XzXkBqg",
+      "realName": "",
+      "customAvatar": "https://assets.production.linktr.ee/static/avatars/blank-avatar.svg",
+      "customAvatarVideo": "",
+      "profilePicture": null,
+      "profilePictureUrl": null,
+      "avatarType": "IMAGE",
+      "avatarMode": "CIRCLE_SMALL",
+      "avatarModes": [
+        "CIRCLE_SMALL",
+        "HERO"
+      ],
+      "backgroundHeroColor": "#68753c",
+      "backgroundGradient": null,
+      "backgroundGradientStyle": "custom",
+      "pageTitle": "luis.nunes000",
+      "description": null,
+      "backgroundImage": "https://assets.production.linktr.ee/static/linktree_theme/groove/895c17c8-d012-4fb3-9a35-ef49d83f7360_background-image-20250827-180659.png",
+      "backgroundPoster": "https://assets.production.linktr.ee/static/linktree_theme/groove/e31c1435-9df8-4fca-8683-ab47c5a03ee3_background-poster-20250827-180659.jpeg",
+      "shadowColor": "#000000",
+      "isLogoVisible": true,
+      "luminance": "light",
+      "tier": "free1",
+      "createdAt": 1761171588000,
+      "backgroundColor": "#ccd7a3",
+      "buttonColor": "#ffffff",
+      "buttonStyle": "fill",
+      "buttonCornerStyle": "roundedfull",
+      "buttonShadowStyle": "shadowfull",
+      "backgroundStyle": "grid",
+      "buttonTextColor": "#000000",
+      "fontStyle": "link sans product",
+      "fontColor": "#000000",
+      "backgroundTint": 45,
+      "headingType": "text",
+      "headingLogo": null,
+      "headingFont": "salsa",
+      "headingColor": "#000000",
+      "headingSize": "large",
+      "headingEffect": "none",
+      "headingLogoSize": "normal",
+      "backgroundNoise": null,
+      "backgroundImageEffect": "NONE",
+      "colorSchema": null,
+      "theme": {
+        "key": "custom",
+        "editable": true,
+        "luminance": "LIGHT",
+        "background": {
+          "color": "#ccd7a3",
+          "style": "GRID",
+          "type": "COLOR",
+          "noise": false,
+          "__typename": "ColorBackground"
+        },
+        "buttonStyle": {
+          "type": "FILL",
+          "backgroundStyle": {
+            "color": "#ffffff",
+            "__typename": "ButtonBackgroundStyle"
+          },
+          "shadowStyle": {
+            "type": "SHADOW_FULL",
+            "color": "#000000",
+            "__typename": "ButtonShadowStyle"
+          },
+          "cornerStyle": {
+            "type": "ROUNDED_FULL",
+            "__typename": "ButtonCornerStyle"
+          },
+          "textStyle": {
+            "color": "#000000",
+            "__typename": "ButtonTextStyle"
+          },
+          "__typename": "ButtonStyle"
+        },
+        "socialStyle": {
+          "color": "#000000",
+          "__typename": "SocialStyle"
+        },
+        "typeface": {
+          "color": "#000000",
+          "family": "link sans product",
+          "__typename": "Typeface"
+        },
+        "heading": {
+          "type": "text",
+          "logo": null,
+          "font": "salsa",
+          "color": "#000000",
+          "size": "large",
+          "effect": "none",
+          "logoSize": "normal",
+          "__typename": "HeadingOptions"
+        },
+        "footer": {
+          "logoUrl": null,
+          "url": null,
+          "color": null,
+          "__typename": "Footer"
+        },
+        "__typename": "CustomTheme"
+      },
+      "metaAttributes": null,
+      "colorPalette": {
+        "palette": [
+          "#939e57",
+          "#be8837",
+          "#5d462d"
+        ],
+        "alternatePalette": [
+          "#565c33",
+          "#6f4f20",
+          "#a2794e"
+        ],
+        "__typename": "AppearanceColorPaletteOption"
+      },
+      "hasAccountPreviewChanges": true,
+      "accountPreviewPaidChanges": {
+        "hasProFeatures": true,
+        "hasPremiumFeatures": false,
+        "__typename": "AccountPreviewPaidChanges"
+      },
+      "hasUndoChanges": true,
+      "hasRedoChanges": false,
+      "__typename": "Account"
+    }
+  }
+}

@@ -120,3 +120,87 @@ export interface Link {
 export type PartialLinkUpdate = Partial<Pick<Link, 'title' | 'url' | 'order' | 'active' | 'scheduledStart' | 'scheduledEnd'>>
 
 // No runtime default export needed — file only exports types.
+
+/**
+ * Appearance / theme types used by the frontend (match example JSON shape)
+ */
+export type Luminance = 'LIGHT' | 'DARK'
+
+export interface AppearanceBackground {
+  color?: string | null
+  style?: string | null
+  type?: string | null
+  gradientStart?: string | null
+  gradientEnd?: string | null
+  gradientDirection?: string | null
+  noise?: boolean | null
+  image?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceButtonBackgroundStyle {
+  color?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceButtonShadowStyle {
+  type?: string | null
+  color?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceButtonCornerStyle {
+  type?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceButtonTextStyle {
+  color?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceButtonStyle {
+  type?: string | null
+  backgroundStyle?: AppearanceButtonBackgroundStyle | null
+  shadowStyle?: AppearanceButtonShadowStyle | null
+  cornerStyle?: AppearanceButtonCornerStyle | null
+  textStyle?: AppearanceButtonTextStyle | null
+  __typename?: string | null
+}
+
+export interface AppearanceTypeface {
+  color?: string | null
+  family?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceHeadingOptions {
+  type?: string | null
+  logo?: string | null
+  font?: string | null
+  color?: string | null
+  size?: string | null
+  effect?: string | null
+  logoSize?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceFooter {
+  logoUrl?: string | null
+  url?: string | null
+  color?: string | null
+  __typename?: string | null
+}
+
+export interface AppearanceTheme {
+  key?: string | null
+  editable?: boolean | null
+  luminance?: Luminance | null
+  background?: AppearanceBackground | null
+  buttonStyle?: AppearanceButtonStyle | null
+  socialStyle?: { color?: string | null; __typename?: string | null } | null
+  typeface?: AppearanceTypeface | null
+  heading?: AppearanceHeadingOptions | null
+  footer?: AppearanceFooter | null
+  __typename?: string | null
+}
