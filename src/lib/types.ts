@@ -124,6 +124,8 @@ export type PartialLinkUpdate = Partial<Pick<Link, 'title' | 'url' | 'order' | '
 /**
  * Appearance / theme types used by the frontend (match example JSON shape)
  */
+import type { CSSProperties } from 'react'
+
 export type Luminance = 'LIGHT' | 'DARK'
 
 export interface AppearanceBackground {
@@ -133,30 +135,31 @@ export interface AppearanceBackground {
   gradientStart?: string | null
   gradientEnd?: string | null
   gradientDirection?: string | null
+  className?: string | null
+  properties?: CSSProperties | null
   noise?: boolean | null
   image?: string | null
-  __typename?: string | null
 }
 
 export interface AppearanceButtonBackgroundStyle {
   color?: string | null
-  __typename?: string | null
+  properties?: CSSProperties | null
 }
 
 export interface AppearanceButtonShadowStyle {
   type?: string | null
   color?: string | null
-  __typename?: string | null
+  properties?: CSSProperties | null
 }
 
 export interface AppearanceButtonCornerStyle {
   type?: string | null
-  __typename?: string | null
+  properties?: CSSProperties | null
 }
 
 export interface AppearanceButtonTextStyle {
   color?: string | null
-  __typename?: string | null
+  properties?: CSSProperties | null
 }
 
 export interface AppearanceButtonStyle {
@@ -165,13 +168,13 @@ export interface AppearanceButtonStyle {
   shadowStyle?: AppearanceButtonShadowStyle | null
   cornerStyle?: AppearanceButtonCornerStyle | null
   textStyle?: AppearanceButtonTextStyle | null
-  __typename?: string | null
+  className?: string | null
+  shapeStyle?: { properties?: CSSProperties | null } | null
 }
 
 export interface AppearanceTypeface {
   color?: string | null
   family?: string | null
-  __typename?: string | null
 }
 
 export interface AppearanceHeadingOptions {
@@ -182,14 +185,12 @@ export interface AppearanceHeadingOptions {
   size?: string | null
   effect?: string | null
   logoSize?: string | null
-  __typename?: string | null
 }
 
 export interface AppearanceFooter {
   logoUrl?: string | null
   url?: string | null
   color?: string | null
-  __typename?: string | null
 }
 
 export interface AppearanceTheme {
@@ -198,9 +199,8 @@ export interface AppearanceTheme {
   luminance?: Luminance | null
   background?: AppearanceBackground | null
   buttonStyle?: AppearanceButtonStyle | null
-  socialStyle?: { color?: string | null; __typename?: string | null } | null
+  socialStyle?: { color?: string | null } | null
   typeface?: AppearanceTypeface | null
   heading?: AppearanceHeadingOptions | null
   footer?: AppearanceFooter | null
-  __typename?: string | null
 }

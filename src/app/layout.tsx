@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { AuthProvider } from '@/contexts/auth'
 import './global.css'
+import AppearanceProvider from '@/contexts/appearance'
 
 
 const satoshi = localFont({
@@ -29,7 +30,11 @@ export default function RootLayout({
     <html lang="pt-BR">
       {/* Prefer Satoshi when available, fall back to Inter */}
       <body className={`${satoshi.className ?? ''}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <AppearanceProvider>
+            {children}
+          </AppearanceProvider>
+        </AuthProvider>
       </body>
     </html>
   )

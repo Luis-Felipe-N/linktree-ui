@@ -10,6 +10,7 @@ import { Copy } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import THEME_PRESETS from '@/lib/theme-presets'
+import { useAppearanceContext } from '@/contexts/appearance'
 
 interface TemplateProps {
   links: LinkType[]
@@ -17,10 +18,9 @@ interface TemplateProps {
 }
 
 export default function TemplateDefault({ links, page }: TemplateProps) {
-  // Use the page theme if present, otherwise fall back to the first preset
-  const presetTheme = THEME_PRESETS?.[0]?.theme
-  const appliedTheme = presetTheme
-
+  const { theme } = useAppearanceContext()
+  const appliedTheme = theme
+  console.log('appliedTheme:', appliedTheme, theme)
   const backgroundToStyle = (bg: any) => {
     if (!bg) return {}
     if (bg.type === 'GRADIENT') {
@@ -38,26 +38,21 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
 
   const buttonStyleFrom = (bs: any) => {
     if (!bs) return {}
-    const textColor = bs?.textStyle?.color ?? bs?.textColor ?? '#000'
-    const bgColor = bs?.backgroundStyle?.color ?? bs?.color ?? (bs?.type === 'FILL' ? '#111827' : 'transparent')
-    const shadowType = bs?.shadowStyle?.type ?? bs?.shadowStyle ?? null
-    const boxShadow = shadowType === 'SHADOW_FULL' ? '0 8px 30px rgba(0,0,0,0.18)' : shadowType === 'SHADOW_SMALL' ? '0 4px 12px rgba(0,0,0,0.08)' : 'none'
-    const border = bs?.type === 'OUTLINE' ? `1px solid ${bgColor === 'transparent' ? '#e5e7eb' : bgColor}` : 'none'
-    return {
-      backgroundColor: bgColor,
-      color: textColor,
-      boxShadow,
-      border,
-      padding: '12px 16px',
-      borderRadius: '8px',
-      display: 'inline-block',
-      textDecoration: 'none',
-    }
+    console.log('button style from:', bs)
+    const propities = Object.assign({},
+      bs?.backgroundStyle?.properties ?? {},
+      bs?.textStyle?.properties ?? {},
+      bs?.shapeStyle?.properties ?? {}
+    )
+    return propities
   }
 
   const containerStyle = backgroundToStyle(appliedTheme?.background)
-  const linkButtonStyle = buttonStyleFrom(appliedTheme?.buttonStyle || appliedTheme?.button)
+  const containerClassName = cn(appliedTheme?.background?.className ?? '')
+  const linkButtonClassName = cn(appliedTheme?.buttonStyle?.className ?? '')
+  const linkButtonStyle = buttonStyleFrom(appliedTheme?.buttonStyle)
 
+  console.log(linkButtonClassName)
   return (
     <div className='grid place-items-center'>
       <div className='mt-8 rounded-[4.5rem] shadow-md overflow-hidden grid place-items-center'>
@@ -68,15 +63,14 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
           alt="iPhone 13"
           className='max-w-[24.375rem] max-h-[49.4375rem] absolute z-0'
         />
-        <div className='w-[22.9rem] h-[49.4375rem] px-2' style={containerStyle}>
+        <div className={cn('w-[22.9rem] h-[49.4375rem] px-2', containerClassName)} style={containerStyle}>
           <div style={{ backgroundImage: 'url(https://images.pexels.com/photos/18884939/pexels-photo-18884939.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', height: '170px', width: '100%' }}>
-
           </div>
 
           <ul className='w-full p-8 space-y-2'>
             {links.map((link) => (
               <li key={link.id} className="w-full">
-                <Link href={link.url} className='block w-full' style={linkButtonStyle}>
+                <Link href={link.url} className={cn('block w-full text-center', linkButtonClassName)} style={linkButtonStyle}>
                   <span className="font-semibold">{link.title}</span>
                 </Link>
               </li>
