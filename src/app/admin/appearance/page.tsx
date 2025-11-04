@@ -2,14 +2,14 @@
 
 import TemplateDefault from '@/components/appearance/deafult'
 import { BackgroundGrid } from '@/components/background-grid'
+import { CustomizeButton } from '@/components/style/button'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import type { Link as LinkType, Page } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { Copy } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { title } from 'process'
 
 export default function Admin() {
 
@@ -19,57 +19,83 @@ export default function Admin() {
     {
       title: 'Estilo do avatar',
       description: 'Personalize o estilo do seu avatar',
-      styles: [
+      appearance: [
         {
-          name: 'square',
-          className: 'rounded-none',
-        },
-        {
-          name: 'rounded-lg',
-          className: 'rounded-lg',
-        },
-        {
-          name: 'rouded',
-          className: 'rounded-full',
-        },
+          styles: [{
+            name: 'square',
+            className: 'rounded-none',
+          },
+          {
+            name: 'rounded-lg',
+            className: 'rounded-lg',
+          },
+          {
+            name: 'rouded',
+            className: 'rounded-full',
+          },]
+        }
       ]
     },
     {
       title: 'Estilo do botão',
       description: 'Personalize o estilo dos botões',
-      styles: [
+      appearance: [
         {
-          name: 'square',
-          className: 'rounded-none h-10',
+          title: 'Estilo do botão',
+          styles: [
+            {
+              name: 'solid',
+              className: 'bordered-none h-10',
+            },
+            {
+              name: 'glass',
+              className: 'border border-white/30 bg-white/10 backdrop-blur-sm h-10',
+            },
+            {
+              name: 'outline',
+              className: 'border border-gray-300 h-10',
+            },
+          ],
         },
         {
-          name: 'rounded-lg',
-          className: 'rounded-lg h-10',
+          title: 'Cor do botão',
+          description: 'Escolha a cor dos botões',
+          styles: [
+            {
+              name: 'Azul',
+              className: 'bg-blue-600',
+            },
+            {
+              name: 'Verde',
+              className: 'bg-green-600',
+            },
+            {
+              name: 'Vermelho',
+              className: 'bg-red-600',
+            },
+          ]
         },
         {
-          name: 'rouded',
-          className: 'rounded-full h-10',
-        },
+          title: 'Sombra do botão',
+          styles: [
+            {
+              name: 'Nenhuma',
+              className: 'shadow-none',
+            },
+            {
+              name: 'Pequena',
+              className: 'shadow-sm',
+            },
+            {
+              name: 'Grande',
+              className: 'shadow-lg',
+            },
+          ]
+        }
       ]
+
     },
-    {
-      title: 'Cor do botão',
-      description: 'Escolha a cor dos botões',
-      styles: [
-        {
-          name: 'Azul',
-          className: 'bg-blue-600',
-        },
-        {
-          name: 'Verde',
-          className: 'bg-green-600',
-        },
-        {
-          name: 'Vermelho',
-          className: 'bg-red-600',
-        },
-      ]
-    }
+
   ]
 
   const PAGE: Page =
@@ -189,7 +215,7 @@ export default function Admin() {
           <h1 className="font-semibold">Temas recomendados</h1>
 
           <ul className='mt-8'>
-            {APPEARANCE.map((appearance) => (
+            {/* {APPEARANCE.map((appearance) => (
               <li key={appearance.title} className="mb-6">
                 <Card>
                   <CardHeader>
@@ -197,21 +223,39 @@ export default function Admin() {
                     <CardDescription>{appearance.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex gap-4">
-                      {appearance.styles.map((style) => (
-                        <div key={style.name} className="flex flex-col items-center gap-2">
-                          <div className={cn(`h-16 w-16 bg-zinc-200`, style.className)}></div>
-                          <span className="text-sm">{style.name}</span>
+                    <div className="flex flex-col gap-4">
+                      {appearance.appearance.map((app) => (
+                        <div key={app.title}>
+                          <h3 className="mb-2 font-medium">{app.title}</h3>
+                          <div className='flex gap-4' >
+                            {
+                              app.styles.map((style) => (
+                                <div
+                                  key={style.name}
+                                  className={cn(
+                                    'flex h-10 w-20 items-center justify-center border bg-gray-100 text-sm font-medium text-gray-700',
+                                    style.className
+                                  )}
+                                >
+                                  {style.name}
+                                </div>
+                              ))
+                            }
+                          </div>
                         </div>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
               </li>
-            ))}
+            ))} */}
+
+            <li className="mb-6">
+              <CustomizeButton />
+            </li>
           </ul>
         </div>
       </aside>
-    </main>
+    </main >
   )
 }

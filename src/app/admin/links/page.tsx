@@ -51,7 +51,7 @@ export default function Admin() {
           <h1 className="font-semibold">Links </h1>
 
           <div>
-            <div className='bg-white p-4 rounded-2xl mt-4 space-y-4'>
+            <div className='bg-white p-4 rounded-2xl mt-4 space-y-2'>
               <div>
 
               </div>
@@ -60,30 +60,12 @@ export default function Admin() {
                 <Input type="url" name='URL' className='h-10' value="https://" />
               </div>
               <div>
-                <Accordion
-                  type="single"
-
-                  className="w-full flex"
-                  defaultValue="item-1"
-                >
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger className='[&>*:last-child]:hidden hover:bg-slate-200 rounded-md p-2'>
-                      <LayoutDashboard />
-                    </AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-4 text-balance">
-                      LAYOUT
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger className='[&>*:last-child]:hidden hover:bg-slate-200 rounded-md p-2'>
-                      <Image />
-                    </AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-4 text-balance">
-                      IMAGE
-                    </AccordionContent>
-                  </AccordionItem>
-
-                </Accordion>
+                <Button size="icon" className='hover:bg-slate-100'>
+                  <LayoutDashboard className='text-gray-600' />
+                </Button>
+                <Button size="icon" className='hover:bg-slate-100'>
+                  <Image className='text-gray-600' />
+                </Button>
               </div>
             </div>
           </div>
