@@ -158,7 +158,7 @@ export default function Admin() {
 
         <div className="relative z-10">
           <section className="mb-8">
-            <Card className="bg-zinc-50">
+            <Card className="bg-zinc-50 rounded-3xl">
               <CardContent>
                 <div className='flex gap-2'>
                   <Input
@@ -184,32 +184,11 @@ export default function Admin() {
         </div>
       </div>
 
-      <aside className="relative z-10 p-4 lg:w-96">
+      <aside className="relative z-10 p-4 lg:w-1/2">
         <div className="mt-8">
-          <h1 className="font-semibold">Temas recomendados</h1>
+          <h1 className="font-semibold">Links </h1>
 
-          <ul className='mt-8'>
-            {APPEARANCE.map((appearance) => (
-              <li key={appearance.title} className="mb-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{appearance.title}</CardTitle>
-                    <CardDescription>{appearance.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-4">
-                      {appearance.styles.map((style) => (
-                        <div key={style.name} className="flex flex-col items-center gap-2">
-                          <div className={cn(`h-16 w-16 bg-zinc-200`, style.className)}></div>
-                          <span className="text-sm">{style.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
-            ))}
-          </ul>
+
         </div>
       </aside>
     </main>

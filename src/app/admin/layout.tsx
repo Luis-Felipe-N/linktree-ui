@@ -2,14 +2,6 @@ import type { Metadata } from 'next'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/app-sidebar'
 import { ProtectedRoute } from '@/components/auth/protected-route'
-import localFont from 'next/font/local'
-
-
-
-const cfont = localFont({
-  src: '../../../public/fonts/Satoshi-Variable.woff2',
-  variable: '--font-cfont',
-})
 
 export const metadata: Metadata = {
   title: '/my-links :: Admin',
@@ -24,7 +16,7 @@ export default function AdminLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full h-screen overflow-auto">
+      <div className="w-full h-screen overflow-auto bg-slate-100">
         <SidebarTrigger />
         {children}
       </div>
