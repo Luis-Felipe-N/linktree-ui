@@ -4,12 +4,10 @@ import TemplateDefault from '@/components/appearance/deafult'
 import { BackgroundGrid } from '@/components/background-grid'
 import { CustomizeButton } from '@/components/style/button'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import type { Link as LinkType, Page } from '@/lib/types'
-import { cn } from '@/lib/utils'
 import { Copy } from 'lucide-react'
-import { title } from 'process'
 
 export default function Admin() {
 
@@ -127,7 +125,7 @@ export default function Admin() {
         </div>
       </div>
 
-      <aside className="relative z-10 p-4 lg:w-1/2">
+      <aside className="relative z-10 p-4 lg:w-1/3">
         <div className="mt-8">
           <h1 className="font-semibold">Temas recomendados</h1>
 

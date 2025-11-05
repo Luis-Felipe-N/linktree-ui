@@ -1,15 +1,14 @@
-'use client'
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useAppearanceContext } from '@/contexts/appearance'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 interface ColorOption {
   label: string
-  color: string
+  properties: React.CSSProperties
 }
 
 export function CustomizeColorsButton() {
@@ -23,18 +22,18 @@ export function CustomizeColorsButton() {
   )
 
   const backgroundPresets: ColorOption[] = [
-    { label: 'Preto', color: '#000000' },
-    { label: 'Branco', color: '#ffffff' },
-    { label: 'Azul', color: '#3b82f6' },
-    { label: 'Verde', color: '#10b981' },
-    { label: 'Vermelho', color: '#ef4444' },
-    { label: 'Roxo', color: '#8b5cf6' },
-  ]
-
-  const textPresets: ColorOption[] = [
-    { label: 'Branco', color: '#ffffff' },
-    { label: 'Preto', color: '#000000' },
-    { label: 'Cinza', color: '#6b7280' },
+    {
+      label: 'Preto',
+      properties: {
+        backgroundColor: '#000000',
+        color: '#ffffff',
+      }
+    },
+    { label: 'Branco', properties: { backgroundColor: '#ffffff', color: '#000000' } },
+    { label: 'Azul', properties: { backgroundColor: '#3b82f6', color: '#ffffff' } },
+    { label: 'Verde', properties: { backgroundColor: '#10b981', color: '#ffffff' } },
+    { label: 'Vermelho', properties: { backgroundColor: '#ef4444', color: '#ffffff' } },
+    { label: 'Roxo', properties: { backgroundColor: '#8b5cf6', color: '#ffffff' } },
   ]
 
   const handleBackgroundChange = (color: string) => {
@@ -67,76 +66,55 @@ export function CustomizeColorsButton() {
         <CardTitle>Cores do Botão</CardTitle>
         <CardDescription>Personalize as cores de fundo e texto dos botões</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Background Color */}
-        <div className="space-y-3">
-          <Label htmlFor="bg-color">Cor de Fundo</Label>
-          <div className="flex items-center gap-3">
-            <Input
-              id="bg-color"
-              type="color"
-              value={backgroundColor}
-              onChange={(e) => handleBackgroundChange(e.target.value)}
-              className="w-20 h-10 cursor-pointer"
-            />
-            <Input
-              type="text"
-              value={backgroundColor}
-              onChange={(e) => handleBackgroundChange(e.target.value)}
-              className="flex-1 font-mono text-sm"
-              placeholder="#000000"
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {backgroundPresets.map((preset) => (
-              <button
-                key={preset.color}
-                onClick={() => handleBackgroundChange(preset.color)}
-                className={cn(
-                  'w-10 h-10 rounded-md border-2 transition-all hover:scale-110',
-                  backgroundColor === preset.color ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300'
-                )}
-                style={{ backgroundColor: preset.color }}
-                title={preset.label}
+      <CardContent>
+        <Tabs defaultValue="presets" className='w-full'>
+          <TabsList>
+            <TabsTrigger value="presets">Presets</TabsTrigger>
+            <TabsTrigger value="custom">Custom</TabsTrigger>
+          </TabsList>
+          <TabsContent className='w-full' value="presets">
+            <div className="grid grid-cols-3 gap-4 mt-4">
+              {backgroundPresets.map((option) => (
+                <button
+                  key={option.label}
+                  className={cn('w-full h-10 rounded-md border-2')}
+                  style={option.properties}
+                  onClick={() => {
+                    handleBackgroundChange(option.properties.backgroundColor as string)
+                    handleTextChange(option.properties.color as string)
+                  }}
+                >
+                  <small>{option.label}</small>
+                </button>
+              ))}
+            </div>
+          </TabsContent>
+          <TabsContent className='w-full space-y-2' value="custom">
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor="bg-color">Cor de Fundo</Label>
+              <Input
+                id="bg-color"
+                type="color"
+                value={backgroundColor}
+                onChange={(e) => handleBackgroundChange(e.target.value)}
+                className="w-20 h-10 cursor-pointer"
               />
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Text Color */}
-        <div className="space-y-3">
-          <Label htmlFor="text-color">Cor do Texto</Label>
-          <div className="flex items-center gap-3">
-            <Input
-              id="text-color"
-              type="color"
-              value={textColor}
-              onChange={(e) => handleTextChange(e.target.value)}
-              className="w-20 h-10 cursor-pointer"
-            />
-            <Input
-              type="text"
-              value={textColor}
-              onChange={(e) => handleTextChange(e.target.value)}
-              className="flex-1 font-mono text-sm"
-              placeholder="#ffffff"
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {textPresets.map((preset) => (
-              <button
-                key={preset.color}
-                onClick={() => handleTextChange(preset.color)}
-                className={cn(
-                  'w-10 h-10 rounded-md border-2 transition-all hover:scale-110',
-                  textColor === preset.color ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300'
-                )}
-                style={{ backgroundColor: preset.color }}
-                title={preset.label}
+            {/* Text Color */}
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor="text-color">Cor do Texto</Label>
+              <Input
+                id="text-color"
+                type="color"
+                value={textColor}
+                onChange={(e) => handleTextChange(e.target.value)}
+                className="w-20 h-10 cursor-pointer"
               />
-            ))}
-          </div>
-        </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+
       </CardContent>
     </Card>
   )
