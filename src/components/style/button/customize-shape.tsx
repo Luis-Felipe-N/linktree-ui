@@ -37,7 +37,7 @@ export function CustomizeShapeButton() {
 
   const handleStyleChange = (style: ButtonStyle) => {
     console.log(`Button style changed to: ${style.type} with properties ${JSON.stringify(style.properties)}`)
-    updateButtonStyle({ shapeStyle: { properties: style.properties } })
+    updateButtonStyle({ shapeStyle: style })
   }
 
   return (

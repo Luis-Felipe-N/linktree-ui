@@ -20,9 +20,17 @@ interface TemplateProps {
 export default function TemplateDefault({ links, page }: TemplateProps) {
   const { theme } = useAppearanceContext()
   const appliedTheme = theme
-  console.log('appliedTheme:', appliedTheme, theme)
   const backgroundToStyle = (bg: any) => {
+    console.log({ bg })
     if (!bg) return {}
+    if (bg.type === 'IMAGE' && bg.imageUrl) {
+      return {
+        backgroundImage: `url(${bg.imageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }
+    }
     if (bg.type === 'GRADIENT') {
       const start = bg.gradientStart ?? '#ffffff'
       const end = bg.gradientEnd ?? '#000000'
@@ -48,11 +56,9 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
   }
 
   const containerStyle = backgroundToStyle(appliedTheme?.background)
-  const containerClassName = cn(appliedTheme?.background?.className ?? '')
-  const linkButtonClassName = cn(appliedTheme?.buttonStyle?.className ?? '')
   const linkButtonStyle = buttonStyleFrom(appliedTheme?.buttonStyle)
+  const textStyle = appliedTheme?.buttonStyle?.textStyle?.properties || {}
 
-  console.log(linkButtonClassName)
   return (
     <div className='grid place-items-center'>
       <div className='mt-8 rounded-[4.5rem] shadow-md overflow-hidden grid place-items-center'>
@@ -63,21 +69,28 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
           alt="iPhone 13"
           className='max-w-[24.375rem] max-h-[49.4375rem] absolute z-0'
         />
-        <div className={cn('w-[22.9rem] h-[49.4375rem] px-2', containerClassName)} style={containerStyle}>
-          <div style={{ backgroundImage: 'url(https://images.pexels.com/photos/18884939/pexels-photo-18884939.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', height: '170px', width: '100%' }}>
+        <div className={cn('w-[22.9rem] h-[49.4375rem] px-2 flex flex-col')} style={containerStyle}>
+          {/* <div style={{ backgroundImage: 'url(https://images.pexels.com/photos/18884939/pexels-photo-18884939.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', height: '170px', width: '100%' }}>
+          </div> */}
+          <div className='w-full grid place-items-center h-full'>
+            <div className='w-full text-center'>
+              <div style={textStyle}>
+                <h1 className='text-xl'>Luis Felipe Nunes</h1>
+                <p className='text-sm font-normal mt-2'>Desenvolvedor Full-Stack</p>
+              </div>
+              <ul className='w-full p-8 space-y-2'>
+                {links.map((link) => (
+                  <li key={link.id} className="w-full">
+                    <Link href={link.url} className={cn('w-full text-center h-12 flex items-center justify-center')} style={linkButtonStyle}>
+                      <span className="font-semibold">{link.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          <ul className='w-full p-8 space-y-2'>
-            {links.map((link) => (
-              <li key={link.id} className="w-full">
-                <Link href={link.url} className={cn('block w-full text-center', linkButtonClassName)} style={linkButtonStyle}>
-                  <span className="font-semibold">{link.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }

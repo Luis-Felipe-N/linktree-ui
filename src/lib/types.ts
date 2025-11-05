@@ -139,6 +139,7 @@ export interface AppearanceBackground {
   properties?: CSSProperties | null
   noise?: boolean | null
   image?: string | null
+  imageUrl?: string | null
 }
 
 export interface AppearanceButtonBackgroundStyle {

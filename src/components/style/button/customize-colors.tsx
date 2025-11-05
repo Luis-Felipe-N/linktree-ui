@@ -4,15 +4,10 @@ import { useAppearanceContext } from '@/contexts/appearance'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
-import { cn } from '@/lib/utils'
-
-interface ColorOption {
-  label: string
-  properties: React.CSSProperties
-}
+import THEME_PRESETS from '@/lib/theme-presets'
 
 export function CustomizeColorsButton() {
-  const { theme, updateButtonStyle } = useAppearanceContext()
+  const { theme, updateButtonStyle, updateBackground } = useAppearanceContext()
 
   const [backgroundColor, setBackgroundColor] = useState(
     theme?.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000'
@@ -21,20 +16,16 @@ export function CustomizeColorsButton() {
     theme?.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff'
   )
 
-  const backgroundPresets: ColorOption[] = [
-    {
-      label: 'Preto',
-      properties: {
-        backgroundColor: '#000000',
-        color: '#ffffff',
-      }
-    },
-    { label: 'Branco', properties: { backgroundColor: '#ffffff', color: '#000000' } },
-    { label: 'Azul', properties: { backgroundColor: '#3b82f6', color: '#ffffff' } },
-    { label: 'Verde', properties: { backgroundColor: '#10b981', color: '#ffffff' } },
-    { label: 'Vermelho', properties: { backgroundColor: '#ef4444', color: '#ffffff' } },
-    { label: 'Roxo', properties: { backgroundColor: '#8b5cf6', color: '#ffffff' } },
-  ]
+  const handlePresetChange = (preset: typeof THEME_PRESETS[number]) => {
+    if (preset.theme.background) {
+      updateBackground(preset.theme.background)
+    }
+    if (preset.theme.buttonStyle) {
+      updateButtonStyle(preset.theme.buttonStyle)
+    }
+    setBackgroundColor(preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000')
+    setTextColor(preset.theme.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff')
+  }
 
   const handleBackgroundChange = (color: string) => {
     setBackgroundColor(color)
@@ -68,23 +59,47 @@ export function CustomizeColorsButton() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="presets" className='w-full'>
-          <TabsList>
-            <TabsTrigger value="presets">Presets</TabsTrigger>
-            <TabsTrigger value="custom">Custom</TabsTrigger>
+          <TabsList className='w-full space-x-2 mb-2'>
+            <TabsTrigger value="presets" className='bg-slate-100 h-12'>Presets</TabsTrigger>
+            <TabsTrigger value="custom" className='bg-slate-100 h-12'>Custom</TabsTrigger>
           </TabsList>
           <TabsContent className='w-full' value="presets">
-            <div className="grid grid-cols-3 gap-4 mt-4">
-              {backgroundPresets.map((option) => (
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              {THEME_PRESETS.map((preset) => (
                 <button
-                  key={option.label}
-                  className={cn('w-full h-10 rounded-md border-2')}
-                  style={option.properties}
-                  onClick={() => {
-                    handleBackgroundChange(option.properties.backgroundColor as string)
-                    handleTextChange(option.properties.color as string)
-                  }}
+                  key={preset.key}
+                  onClick={() => handlePresetChange(preset)}
+                  className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary transition-all p-4 text-left"
                 >
-                  <small>{option.label}</small>
+                  {/* Background Preview */}
+                  <div
+                    className="absolute inset-0 group-hover:opacity-70 transition-opacity"
+                    style={preset.theme.background?.properties || {}}
+                  />
+
+                  {/* Content */}
+                  <div className="relative z-10" style={{ color: preset.theme.buttonStyle?.textStyle?.properties?.color }}>
+                    <div className="font-semibold text-sm mb-1">{preset.title}</div>
+                    <div className="text-xs text-muted-foreground mb-3">
+                      {preset.description}
+                    </div>
+
+                    {/* Button Preview */}
+                    <div className="flex justify-center">
+                      <span
+                        className="inline-block px-3 py-1.5 text-xs font-medium rounded"
+                        style={{
+                          backgroundColor: preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor,
+                          color: preset.theme.buttonStyle?.textStyle?.properties?.color,
+                          border: preset.theme.buttonStyle?.shapeStyle?.properties?.border as string,
+                          boxShadow: preset.theme.buttonStyle?.shadowStyle?.properties?.boxShadow as string,
+                          borderRadius: preset.theme.buttonStyle?.shapeStyle?.properties?.borderRadius as string,
+                        }}
+                      >
+                        Preview
+                      </span>
+                    </div>
+                  </div>
                 </button>
               ))}
             </div>
@@ -120,4 +135,4 @@ export function CustomizeColorsButton() {
   )
 }
 
-export default CustomizeColorsButton 
+export default CustomizeColorsButton

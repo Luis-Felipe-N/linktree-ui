@@ -7,7 +7,7 @@ import THEME_PRESETS, { getPreset } from '@/lib/theme-presets'
 const STORAGE_KEY = 'appearance_theme_v1'
 
 export function useAppearance(initial?: AppearanceTheme) {
-  const defaultTheme = initial ?? THEME_PRESETS?.[1]?.theme ?? ({} as AppearanceTheme)
+  const defaultTheme = initial ?? THEME_PRESETS?.[0]?.theme ?? ({} as AppearanceTheme)
   const [theme, setTheme] = useState<AppearanceTheme>(defaultTheme)
 
   // useEffect(() => {
@@ -34,14 +34,20 @@ export function useAppearance(initial?: AppearanceTheme) {
   }, [])
 
   const updateBackground = useCallback((patch: Partial<AppearanceTheme['background']>) => {
-    setTheme((prev) => ({ ...(prev ?? {}), background: { ...(prev?.background ?? {}), ...(patch as any) } }))
+    console.log('updateBackground patch:', patch)
+    setTheme((prevTheme) => {
+      const updated = { ...prevTheme, background: { ...prevTheme.background, ...patch } }
+      console.log('updated theme:', updated)
+      return updated
+    })
   }, [])
 
   const updateButtonStyle = useCallback((patch: Partial<AppearanceTheme['buttonStyle']>) => {
     console.log('updateButtonStyle patch:', patch)
-    const themeUpdated = { ...theme, buttonStyle: { ...theme.buttonStyle, ...patch } }
-    setTheme(themeUpdated)
-    console.log('updated theme:', theme)
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      buttonStyle: { ...prevTheme.buttonStyle, ...patch }
+    }))
   }, [])
 
   // const reset = useCallback(() => setTheme(defaultTheme), [defaultTheme])

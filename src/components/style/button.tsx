@@ -1,4 +1,5 @@
 import { CustomizeColorsButton } from "./button/customize-colors";
+import CustomizeRadiusButton from "./button/customize-radius";
 import { CustomizeShapeButton } from "./button/customize-shape";
 
 export function CustomizeButton() {
@@ -6,6 +7,7 @@ export function CustomizeButton() {
     <div className="space-y-2">
       <CustomizeShapeButton />
       <CustomizeColorsButton />
+      <CustomizeRadiusButton />
     </div>
   )
 }
