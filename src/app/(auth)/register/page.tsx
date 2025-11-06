@@ -88,13 +88,13 @@ export default function Register() {
   async function handleCreateAccount(credentials: RegisterFormData) {
     try {
       await api.post('/users', credentials)
-      
+
       // Auto-login após registro
       await login({
         username: credentials.username,
         password: credentials.password,
       })
-      
+
       router.push('/admin')
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -117,7 +117,7 @@ export default function Register() {
         <p className="mt-2 text-zinc-400">Cadastre-se gratuitamente</p>
 
         <form
-          className="mt-16 text-sm leading-none"
+          className="mt-16 text-sm leading-none text-slate-700"
           onSubmit={handleSubmit(handleCreateAccount)}
         >
           {errors.root && (
@@ -130,10 +130,11 @@ export default function Register() {
             placeholder="Email"
             errors={errors.email}
             autoComplete="email"
+            className='text-slate-700'
           />
           <Input
             placeholder="Usuário"
-            className="mt-4"
+            className="mt-4 text-slate-700"
             prefix="melinks.com/"
             {...register('username')}
             errors={errors.username}
@@ -141,7 +142,7 @@ export default function Register() {
           />
           <Input
             placeholder="Senha"
-            className="mt-4"
+            className="mt-4 text-slate-700"
             type="password"
             {...register('password')}
             errors={errors.password}
@@ -149,7 +150,7 @@ export default function Register() {
           />
 
           <button
-            className="flex items-center justify-center gap-2 mt-8 px-4 h-14 w-full rounded-full font-bold bg-green-500 hover:bg-green-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed"
+            className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed w-full mt-4"
             disabled={isSubmitting}
             type="submit"
           >

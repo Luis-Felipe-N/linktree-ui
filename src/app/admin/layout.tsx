@@ -17,7 +17,7 @@ export default function AdminLayout({
     <SidebarProvider>
       <AppSidebar />
       <div className="w-full h-screen overflow-auto">
-        <SidebarTrigger />
+        {/* <SidebarTrigger /> */}
         {children}
       </div>
     </SidebarProvider>

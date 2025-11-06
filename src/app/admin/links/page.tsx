@@ -53,7 +53,7 @@ export default function Admin() {
           <div>
             <div className='bg-white p-4 rounded-2xl mt-4 space-y-2'>
               <div>
-
+                
               </div>
               <div className='space-y-2'>
                 <Input type="text" name='Titulo' className='h-10' value="Portifolio" />

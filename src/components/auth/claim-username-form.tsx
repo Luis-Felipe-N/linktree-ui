@@ -37,7 +37,7 @@ export function ClaimUsernameForm() {
 
     try {
       const response = await api.get(`/users/search?username=${username}`)
-      
+
       if (response.data.existing) {
         setError('username', {
           message: 'Esse nome de usuário parece já estar sendo usado',
@@ -58,7 +58,7 @@ export function ClaimUsernameForm() {
     >
       <Input
         placeholder="usuário"
-        className="flex-1"
+        className="flex-1 text-slate-700"
         prefix="melinks.com/"
         {...register('username')}
         errors={errors.username}
@@ -66,7 +66,7 @@ export function ClaimUsernameForm() {
       />
 
       <button
-        className="flex items-center justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-green-500 hover:bg-green-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed"
+        className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed"
         disabled={isSubmitting}
         type="submit"
       >

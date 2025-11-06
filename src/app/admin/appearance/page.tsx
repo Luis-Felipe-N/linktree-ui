@@ -20,30 +20,6 @@ export default function Admin() {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     ownerId: 'user1',
-    theme: {
-      title: 'Ocean',
-      created_at: new Date().toISOString(),
-      active: true,
-      background: {
-        active: true,
-        id: 'bg1',
-        type: 'GRADIENT',
-        gradientStart: '#2b6cb0',
-        gradientEnd: '#2c7a7b',
-        gradientDirection: '135deg',
-        style: 'WAVES',
-      },
-      button: {
-        style: 'outline',
-        color: '#ffffff',
-        textColor: '#2b6cb0',
-        textAlign: 'center',
-        shadowStyle: 'none',
-        backgroundColor: '#06b6d4',
-        padding: ' 1rem',
-        width: '100%',
-      },
-    },
     slug: 'luis.nunnes',
     description: 'Página de links do Luis Nunnes',
     imageUrl: 'https://avatars.githubusercontent.com/u/76018201?v=4',
@@ -89,8 +65,8 @@ export default function Admin() {
   ]
 
   return (
-    <main className="relative flex min-h-screen flex-col overflow-hidden lg:flex-row">
-      <div className="relative z-10 flex-1 p-6 bg-zinc-50/50">
+    <main className="relative flex flex-col  lg:flex-row">
+      <div className="flex-1 p-6 bg-zinc-50/50 sticky top-0 ">
         <BackgroundGrid
           className="pointer-events-none absolute inset-0 opacity-60"
           cellSize={20}
@@ -125,50 +101,14 @@ export default function Admin() {
         </div>
       </div>
 
-      <aside className="relative z-10 p-4 lg:w-1/3">
-        <div className="mt-8">
-          <h1 className="font-semibold">Temas recomendados</h1>
+      <aside className="relative z-10 p-4 lg:w-1/2 inset-0 border-l">
+        <div className="mt-8 space-y-4 px-4">
+          <h1 className="font-semibold">
+            Personalize a Aparência da Sua Página
+          </h1>
 
-          <ul className='mt-8'>
-            {/* {APPEARANCE.map((appearance) => (
-              <li key={appearance.title} className="mb-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{appearance.title}</CardTitle>
-                    <CardDescription>{appearance.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col gap-4">
-                      {appearance.appearance.map((app) => (
-                        <div key={app.title}>
-                          <h3 className="mb-2 font-medium">{app.title}</h3>
-                          <div className='flex gap-4' >
-                            {
-                              app.styles.map((style) => (
-                                <div
-                                  key={style.name}
-                                  className={cn(
-                                    'flex h-10 w-20 items-center justify-center border bg-gray-100 text-sm font-medium text-gray-700',
-                                    style.className
-                                  )}
-                                >
-                                  {style.name}
-                                </div>
-                              ))
-                            }
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
-            ))} */}
+          <CustomizeButton />
 
-            <li className="mb-6">
-              <CustomizeButton />
-            </li>
-          </ul>
         </div>
       </aside>
     </main >

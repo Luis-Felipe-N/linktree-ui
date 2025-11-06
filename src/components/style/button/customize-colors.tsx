@@ -54,7 +54,7 @@ export function CustomizeColorsButton() {
   return (
     <Card className="shadow-none">
       <CardHeader>
-        <CardTitle>Cores do Botão</CardTitle>
+        <CardTitle>Temas Recomendados</CardTitle>
         <CardDescription>Personalize as cores de fundo e texto dos botões</CardDescription>
       </CardHeader>
       <CardContent>
