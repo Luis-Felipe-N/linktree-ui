@@ -50,6 +50,8 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
   const linkButtonStyle = buttonStyleFrom(theme?.buttonStyle)
   const textColor = theme?.typeface?.color || '#000000'
 
+  console.log('TemplateDefault render:', { page })
+
   return (
     <div className="h-full flex items-center justify-center p-4 lg:p-8">
       <div className="max-w-md">

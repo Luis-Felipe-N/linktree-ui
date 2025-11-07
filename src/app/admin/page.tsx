@@ -1,196 +1,142 @@
 'use client'
 
-import TemplateDefault from '@/components/appearance/deafult'
-import { BackgroundGrid } from '@/components/background-grid'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import type { Link as LinkType, Page } from '@/lib/types'
-import { cn } from '@/lib/utils'
-import { Copy } from 'lucide-react'
-import Image from 'next/image'
+import { Copy, Plus, ExternalLink, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
+import { usePages } from '@/hooks/use-pages'
+import { Input } from '@/components/form/input'
+import { cn } from '@/lib/utils'
 
 export default function Admin() {
+  const { data: pages, isLoading, error, refetch } = usePages()
 
-  const userProfileUrl = `https://my-links.com/luis.nunnes`
-
-  const APPEARANCE = [
-    {
-      title: 'Estilo do avatar',
-      description: 'Personalize o estilo do seu avatar',
-      styles: [
-        {
-          name: 'square',
-          className: 'rounded-none',
-        },
-        {
-          name: 'rounded-lg',
-          className: 'rounded-lg',
-        },
-        {
-          name: 'rouded',
-          className: 'rounded-full',
-        },
-      ]
-    },
-    {
-      title: 'Estilo do botão',
-      description: 'Personalize o estilo dos botões',
-      styles: [
-        {
-          name: 'square',
-          className: 'rounded-none h-10',
-        },
-        {
-          name: 'rounded-lg',
-          className: 'rounded-lg h-10',
-        },
-        {
-          name: 'rouded',
-          className: 'rounded-full h-10',
-        },
-      ]
-    },
-    {
-      title: 'Cor do botão',
-      description: 'Escolha a cor dos botões',
-      styles: [
-        {
-          name: 'Azul',
-          className: 'bg-blue-600',
-        },
-        {
-          name: 'Verde',
-          className: 'bg-green-600',
-        },
-        {
-          name: 'Vermelho',
-          className: 'bg-red-600',
-        },
-      ]
-    }
-  ]
-
-  const PAGE: Page =
-  {
-    id: 'page1',
-    title: 'Página Principal',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    ownerId: 'user1',
-    theme: {
-      title: 'Ocean',
-      created_at: new Date().toISOString(),
-      active: true,
-      background: {
-        active: true,
-        id: 'bg1',
-        type: 'GRADIENT',
-        gradientStart: '#2b6cb0',
-        gradientEnd: '#2c7a7b',
-        gradientDirection: '135deg',
-        style: 'WAVES',
-      },
-      button: {
-        style: 'outline',
-        color: '#ffffff',
-        textColor: '#2b6cb0',
-        textAlign: 'center',
-        shadowStyle: 'none',
-        backgroundColor: '#06b6d4',
-        padding: ' 1rem',
-        width: '100%',
-      },
-    },
-    slug: 'luis.nunnes',
-    description: 'Página de links do Luis Nunnes',
-    imageUrl: 'https://avatars.githubusercontent.com/u/76018201?v=4',
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
   }
 
-  const LINKS: LinkType[] = [
-    {
-      id: '1',
-      title: 'Meu Site',
-      url: 'https://meusite.com',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      active: true,
-      order: 1,
-      clickCount: 120,
-      pageId: 'page1',
-      page: PAGE,
-    },
-    {
-      id: '2',
-      title: 'Blog',
-      url: 'https://meusite.com/blog',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      active: true,
-      order: 2,
-      clickCount: 85,
-      pageId: 'page1',
-      page: PAGE,
-    },
-    {
-      id: '3',
-      title: 'Portfólio',
-      url: 'https://meusite.com/portfolio',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      active: true,
-      order: 3,
-      clickCount: 45,
-      pageId: 'page1',
-      page: PAGE,
-    },
-  ]
+  if (isLoading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando páginas...</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle className="text-red-600">Erro</CardTitle>
+            <CardDescription>
+              {error instanceof Error ? error.message : 'Erro ao carregar páginas'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => refetch()}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Tentar novamente
+            </Button>
+          </CardContent>
+        </Card>
+      </main>
+    )
+  }
 
   return (
-    <main className="relative flex min-h-screen flex-col overflow-hidden lg:flex-row">
-      <div className="relative z-10 flex-1 p-6 bg-zinc-50/50">
-        <BackgroundGrid
-          className="pointer-events-none absolute inset-0 opacity-60"
-          cellSize={20}
-          lineColor="rgba(113, 113, 122, 0.15)"
-        />
-
-        <div className="relative z-10">
-          <section className="mb-8">
-            <Card className="bg-zinc-50 rounded-3xl">
-              <CardContent>
-                <div className='flex gap-2'>
-                  <Input
-                    className='h-10'
-                    id="profile-url"
-                    type="text"
-                    value={userProfileUrl}
-                    readOnly
-                    onClick={(e) => e.currentTarget.select()}
-                  />
-                  <Button className='font-semibold bg-amber-500 rounded-xl px-4 text-white'>
-                    <Copy size={10} strokeWidth={3} />
-                    Copiar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* IPHONE 13 */}
-            <TemplateDefault links={LINKS} page={PAGE} />
-
-          </section>
+    <main className="relative flex min-h-screen flex-col overflow-hidden p-6">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">Minhas Páginas</h1>
+            <p className="text-gray-600 mt-2">
+              Gerencie suas páginas de links
+            </p>
+          </div>
+          <Button asChild>
+            <Link href="/admin/pages/new">
+              <Plus className="w-4 h-4 mr-2" />
+              Nova Página
+            </Link>
+          </Button>
         </div>
+
+        {!pages || pages.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <p className="text-gray-600 mb-4">
+                Você ainda não tem páginas criadas
+              </p>
+              <Button asChild>
+                <Link href="/pages/new">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Criar minha primeira página
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {pages?.map((page) => (
+              <Card key={page.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl">{page.title}</CardTitle>
+                      <CardDescription className="mt-1">
+                        {page.description || 'Sem descrição'}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Input
+                      name="username"
+                      placeholder="nomedapagina"
+                      className={cn('flex-1 text-slate-700')}
+                      showPrefix={true}
+                      autoComplete="username"
+                      value={page.slug}
+                    >
+                      <span className="whitespace-nowrap text-zinc-500">mylinks.com/</span>
+                    </Input>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => copyToClipboard(`${window.location.origin}/${page.username}`)}
+                    >
+                      <Copy className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button asChild className="flex-1" variant="outline">
+                      <Link href={`/admin/${page.slug}/appearance`}>
+                        Aparência
+                      </Link>
+                    </Button>
+                    <Button asChild className="flex-1" variant="outline">
+                      <Link href={`/admin/${page.slug}/links`}>
+                        Links
+                      </Link>
+                    </Button>
+                    <Button asChild size="icon" variant="outline">
+                      <Link href={`/${page.username || page.slug}`} target="_blank">
+                        <ExternalLink className="w-4 h-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
-
-      <aside className="relative z-10 p-4 lg:w-1/2">
-        <div className="mt-8">
-          <h1 className="font-semibold">Links </h1>
-
-
-        </div>
-      </aside>
     </main>
   )
 }

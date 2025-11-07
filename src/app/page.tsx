@@ -1,55 +1,27 @@
 'use client'
 
-// import { useAuth } from '@/contexts/auth'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import { useAuth } from '../contexts/auth'
-import { ClaimUsernameForm } from '../components/auth/claim-username-form'
+import { ClaimUsernameForm } from "@/components/auth/claim-username-form";
+import { useAuth } from "@/contexts/auth";
 
-export default function Home() {
+export default function NewPage() {
   const { user, isLoading } = useAuth()
-  const router = useRouter()
 
-  useEffect(() => {
-    if (!isLoading && user) {
-      router.push('/admin')
-    }
-  }, [user, isLoading, router])
+  let redirectTo = '/register'
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Carregando...</p>
-      </div>
-    )
-  }
-
-  if (user) {
-    return null
+  if (!isLoading && user) {
+    redirectTo = '/pages/new'
   }
 
   return (
-    <main className="min-h-screen grid lg:grid-cols-[3fr_2fr] grid-cols-1">
-      <div className="p-24">
-        <div className="mt-4 flex flex-col justify-center h-full max-w-xl mx-auto">
-          <h1 className="text-6xl font-black">
-            Escolha seu nome de usuário
+    <main className="h-screen ">
+      <video className="absolute inset-0 -z-10 object-cover w-full h-full" poster="https://static.biosites.com/editor/assets/graphics/create-site.png" src="https://static.biosites.com/editor/assets/videos/create-site.mp4"></video>
+      <div className="w-full h-full bg-slate-900/30 backdrop-blur-md grid place-items-center">
+        <div className="space-y-16 ">
+          <h1 className="text-white font-bold text-2xl text-center">
+            Escolha o nome da sua página
           </h1>
-
-          <p className="mt-4">
-            Experimente algo semelhante às suas redes sociais para facilitar o reconhecimento.
-          </p>
-
-          <ClaimUsernameForm />
+          <ClaimUsernameForm redirectTo={redirectTo} />
         </div>
-      </div>
-
-      <div className="h-screen hidden lg:block">
-        <img
-          className="w-full h-full object-cover"
-          src="https://images.pexels.com/photos/8609315/pexels-photo-8609315.jpeg?auto=compress&cs=tinysrgb&w=1600"
-          alt="Background"
-        />
       </div>
     </main>
   )

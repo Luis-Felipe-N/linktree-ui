@@ -4,12 +4,12 @@ import { FieldError } from 'react-hook-form'
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  prefix?: string
+  showPrefix: boolean
   errors?: FieldError
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, prefix, errors, ...props }, ref) => {
+  ({ className, type, showPrefix = false, errors, ...props }, ref) => {
     const hasError = !!errors
 
     const baseInputClasses = cn(
@@ -17,19 +17,22 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       hasError && 'border-2 border-red-600',
       className,
     )
+    const { children, ...rest } = props;
 
     return (
       <div>
-        {prefix ? (
+        {showPrefix ? (
           <div className={baseInputClasses}>
             <div className="flex items-center gap-1 h-full">
-              <span className="whitespace-nowrap text-zinc-400">{prefix}</span>
-              <input
-                type={type}
-                className="w-full h-full bg-transparent outline-0"
-                ref={ref}
-                {...props}
-              />
+              {props.children}
+              <div>
+                <input
+                  type={type}
+                  className="w-full h-full bg-transparent outline-0"
+                  ref={ref}
+                  {...rest}
+                />
+              </div>
             </div>
           </div>
         ) : (

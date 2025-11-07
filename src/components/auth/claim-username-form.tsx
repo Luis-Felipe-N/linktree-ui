@@ -1,82 +1,108 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useRouter } from 'next/navigation'
-import { Loader2 } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Loader2, Check, X } from 'lucide-react'
 import { Input } from '../form/input'
 import { api } from '@/lib/api'
+import { cn } from '@/lib/utils'
+import { useState, useRef, useCallback } from 'react'
 
-const ClaimUsernameFormSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'Usuário precisa conter no mínimo 3 letras' })
-    .regex(/^([a-z\-]+)$/i, {
-      message: 'Usuário deve conter apenas letras e hífen',
-    })
-    .transform((username) => username.toLowerCase()),
-})
+interface ClaimUsernameFormProps {
+  redirectTo: string
+}
 
-type ClaimUsernameFormData = z.infer<typeof ClaimUsernameFormSchema>
-
-export function ClaimUsernameForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm<ClaimUsernameFormData>({
-    resolver: zodResolver(ClaimUsernameFormSchema),
-  })
-
+export function ClaimUsernameForm({ redirectTo }: ClaimUsernameFormProps) {
+  const [usernameIsValid, setUsernameIsValid] = useState<boolean | null>(null)
+  const [isChecking, setIsChecking] = useState(false)
+  const [username, setUsername] = useState('')
   const router = useRouter()
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  async function handleClaimUsername(data: ClaimUsernameFormData) {
-    const { username } = data
+  const handleSearch = useCallback(async (term: string) => {
+    setUsername(term)
 
-    try {
-      const response = await api.get(`/users/search?username=${username}`)
-
-      if (response.data.existing) {
-        setError('username', {
-          message: 'Esse nome de usuário parece já estar sendo usado',
-        })
-      } else {
-        router.push(`/register?username=${username}`)
+    if (!term.trim()) {
+      setUsernameIsValid(null)
+      setIsChecking(false)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
       }
-    } catch (error) {
-      // Se a API retornar erro, assumimos que o usuário não existe
-      router.push(`/register?username=${username}`)
+      return
     }
+
+    // Iniciar loading
+    setIsChecking(true)
+    setUsernameIsValid(null)
+
+    // Limpar timeout anterior
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
+    // Debounce de 700ms
+    timeoutRef.current = setTimeout(async () => {
+      try {
+        const response = await api.get(`/users/search?username=${term}`)
+        setUsernameIsValid(!response.data.existing)
+      } catch (error) {
+        console.error('Error checking username:', error)
+        setUsernameIsValid(null)
+      } finally {
+        setIsChecking(false)
+      }
+    }, 700)
+  }, [])
+
+  const handleClaimUsername = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (!username.trim() || usernameIsValid === false) {
+      return
+    }
+
+    router.push(`${redirectTo}?username=${username}`)
   }
 
+  const inputBorderClass = usernameIsValid === null
+    ? ''
+    : usernameIsValid
+      ? 'border-green-300 focus-within:outline-green-500'
+      : 'border-red-500 focus-within:outline-red-500'
+
+  const isFormValid = username.trim() && usernameIsValid === true
+
   return (
-    <form
-      onSubmit={handleSubmit(handleClaimUsername)}
-      className="flex mt-8 gap-2"
-    >
+    <form onSubmit={handleClaimUsername} className="flex gap-2">
       <Input
-        placeholder="usuário"
-        className="flex-1 text-slate-700"
-        prefix="melinks.com/"
-        {...register('username')}
-        errors={errors.username}
+        name="username"
+        placeholder="nomedapagina"
+        className={cn('flex-1 text-slate-700', inputBorderClass)}
+        showPrefix={true}
         autoComplete="username"
-      />
+        value={username}
+        onChange={(e) => handleSearch(e.target.value)}
+      >
+        {/* Ícone de validação */}
+        <div className="flex items-center justify-center w-5">
+          {isChecking ? (
+            <Loader2 className="animate-spin text-zinc-500" size={16} />
+          ) : usernameIsValid === true ? (
+            <Check className="text-green-500" size={16} />
+          ) : usernameIsValid === false ? (
+            <X className="text-red-500" size={16} />
+          ) : null}
+        </div>
+
+        {/* Prefixo do domínio */}
+        <span className="whitespace-nowrap text-zinc-500">mylinks.com/</span>
+      </Input>
 
       <button
-        className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed"
-        disabled={isSubmitting}
+        className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         type="submit"
+        disabled={!isFormValid || isChecking}
       >
-        {isSubmitting ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-          </>
-        ) : (
-          'Reservar'
-        )}
+        Reservar
       </button>
     </form>
   )

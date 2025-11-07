@@ -26,10 +26,12 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token inválido ou expirado
       Cookies.remove('token')
-      
-      // Redirecionar para login apenas se não estiver em rota pública
+
+      // Redirecionar para login de forma assíncrona para evitar erro de setState durante render
       if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
-        window.location.href = '/login'
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 0)
       }
     }
     return Promise.reject(error)

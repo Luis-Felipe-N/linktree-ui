@@ -7,8 +7,6 @@
  * - Relation fields are represented by their foreign key IDs on the top-level objects (e.g. `ownerId`, `pageId`).
  *   Optional nested objects (like `theme` or `links`) may be included by the API; when present they follow the interfaces below.
  */
-
-// ISO date string for serialized DateTime fields from the API
 export type ISODateString = string
 
 export interface User {
@@ -19,7 +17,6 @@ export interface User {
   created_at: ISODateString
   updated_at: ISODateString
 
-  // If the API embeds pages, they will be an array of Page objects.
   pages?: Page[]
 }
 
@@ -29,14 +26,13 @@ export interface Page {
   title?: string | null
   description?: string | null
   imageUrl?: string | null
+  username?: string | null
   createdAt: ISODateString
   updatedAt: ISODateString
 
-  // owner relation
   ownerId: string
   owner?: User
 
-  // optional theme and links
   theme?: Theme | null
   links?: Link[]
 }
@@ -47,11 +43,9 @@ export interface Theme {
   created_at: ISODateString
   active: boolean
 
-  // relation to Page
   pageId: string
   page?: Page
 
-  // optional relations to background and button
   backgroundId?: string | null
   background?: Background | null
   buttonId?: string | null
@@ -73,7 +67,6 @@ export interface Background {
 
   style?: string | null
 
-  // If API embeds themes that reference this background
   themes?: Theme[]
 }
 
@@ -109,7 +102,6 @@ export interface Link {
   type?: string
   isLocked?: boolean
 
-  // relation to Page
   pageId: string
   page?: Page
 }
@@ -118,8 +110,6 @@ export interface Link {
  * Helpful utility types
  */
 export type PartialLinkUpdate = Partial<Pick<Link, 'title' | 'url' | 'order' | 'active' | 'scheduledStart' | 'scheduledEnd'>>
-
-// No runtime default export needed — file only exports types.
 
 /**
  * Appearance / theme types used by the frontend (match example JSON shape)
