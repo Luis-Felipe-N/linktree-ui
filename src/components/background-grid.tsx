@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 
 interface BackgroundGridProps {
@@ -46,8 +48,8 @@ export function BackgroundGrid({
       context.save()
       context.scale(dpr, dpr)
 
-  context.strokeStyle = lineColor
-  context.lineWidth = lineWidth / dpr
+      context.strokeStyle = lineColor
+      context.lineWidth = lineWidth / dpr
 
       const spacing = cellSize
       const horizontalCount = Math.ceil(height / spacing)
@@ -76,8 +78,8 @@ export function BackgroundGrid({
       animationFrameId = requestAnimationFrame(drawGrid)
     }
 
-  const resizeObserver = new ResizeObserver(() => queueDraw())
-  resizeObserver.observe(canvas.parentElement ?? canvas)
+    const resizeObserver = new ResizeObserver(() => queueDraw())
+    resizeObserver.observe(canvas.parentElement ?? canvas)
 
     queueDraw()
 

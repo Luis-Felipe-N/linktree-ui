@@ -1,6 +1,6 @@
 'use client'
 
-import { Input } from '@/components/form/input'
+import { Input } from '@/components/ui/input'
 import { api } from '@/lib/api'
 import { useAuth } from '@/contexts/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,7 +33,7 @@ type RegisterFormData = z.infer<typeof registerFormSchema>
 export default function Register() {
   const searchParams = useSearchParams()
   const username = searchParams.get('username') ?? ''
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout>(null)
   const router = useRouter()
   const { login } = useAuth()
 
@@ -128,7 +128,7 @@ export default function Register() {
           <Input
             {...register('email')}
             placeholder="Email"
-            errors={errors.email}
+            // errors={errors.email}
             autoComplete="email"
             className='text-slate-700'
           />
@@ -137,7 +137,7 @@ export default function Register() {
             className="mt-4 text-slate-700"
             prefix="melinks.com/"
             {...register('username')}
-            errors={errors.username}
+            // errors={errors.username}
             autoComplete="username"
           />
           <Input
@@ -145,7 +145,7 @@ export default function Register() {
             className="mt-4 text-slate-700"
             type="password"
             {...register('password')}
-            errors={errors.password}
+            // errors={errors.password}
             autoComplete="new-password"
           />
 
@@ -167,7 +167,7 @@ export default function Register() {
 
         <p className="mt-16 text-zinc-400">
           Já possui uma conta?{' '}
-          <Link className="text-green-400 hover:underline" href="/login">
+          <Link className="text-slate-700 hover:underline font-semibold" href="/login">
             Faça login
           </Link>
         </p>

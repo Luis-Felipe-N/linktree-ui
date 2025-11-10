@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { Page } from '@/lib/types'
@@ -7,7 +9,7 @@ export function usePages() {
     queryKey: ['pages'],
     queryFn: async () => {
       const response = await api.get('/me/pages')
-      const pages: Page[] = response.data.pages.map((pageData: any) => ({ ...pageData.props, id: pageData._id.value }))
+      const pages: Page[] = response.data.pages
 
       return pages
     },

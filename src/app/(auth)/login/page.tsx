@@ -35,6 +35,7 @@ export default function Login() {
   const router = useRouter()
 
   async function handleLogin(credentials: LoginFormData) {
+    console.log('login', credentials)
     try {
       await login(credentials)
       router.push('/admin')
@@ -47,6 +48,8 @@ export default function Login() {
       }
     }
   }
+  console.log('errors', errors)
+  console.log('errors', isSubmitting)
 
   return (
     <div className="p-24">
@@ -82,7 +85,7 @@ export default function Login() {
           />
 
           <button
-            className="flex items-center justify-center gap-2 mt-8 px-4 h-14 w-full rounded-full font-bold bg-green-500 hover:bg-green-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed"
+            className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed w-full mt-4"
             disabled={isSubmitting}
             type="submit"
           >
@@ -99,7 +102,7 @@ export default function Login() {
 
         <p className="mt-16 text-zinc-400">
           Não possui uma conta?{' '}
-          <Link className="text-green-400 hover:underline" href="/register">
+          <Link className="text-slate-600 hover:underline" href="/register">
             Faça seu cadastro
           </Link>
         </p>

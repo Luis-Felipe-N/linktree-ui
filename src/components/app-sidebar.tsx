@@ -1,4 +1,6 @@
-import { Home, Link as LinkIcon, Palette, Settings, User } from 'lucide-react'
+'use client'
+
+import { Link as LinkIcon, Palette, Settings, User } from 'lucide-react'
 import Link from 'next/link'
 
 import {
@@ -7,45 +9,51 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 
-const items = [
-  {
-    title: 'Dashboard',
-    url: '/admin',
-    icon: Home,
-  },
-  {
-    title: 'Links',
-    url: '/admin/links',
-    icon: LinkIcon,
-  },
-  {
-    title: 'Aparência',
-    url: '/admin/appearance',
-    icon: Palette,
-  },
-  {
-    title: 'Perfil',
-    url: '/admin/profile',
-    icon: User,
-  },
-  {
-    title: 'Configurações',
-    url: '/admin/settings',
-    icon: Settings,
-  },
-]
+import { useActivePage } from '@/contexts/active-page'
+import { PageSwitcher } from './page-switcher'
 
 export function AppSidebar() {
+  const { activePage } = useActivePage()
+
+  const items = [
+    {
+      title: 'Links',
+      url: activePage ? `/admin/${activePage.slug}/links` : '/admin/links',
+      icon: LinkIcon,
+    },
+    {
+      title: 'Aparência',
+      url: activePage ? `/admin/${activePage.slug}/appearance` : '/admin/appearance/theme',
+      icon: Palette,
+    },
+    {
+      title: 'Perfil',
+      url: '/admin/profile',
+      icon: User,
+    },
+    {
+      title: 'Configurações',
+      url: '/admin/settings',
+      icon: Settings,
+    },
+  ]
   return (
-    <Sidebar>
+    <Sidebar className='p-4'>
+      <SidebarHeader>
+        <PageSwitcher />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>/my-links</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            /mylinks
+          </SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
