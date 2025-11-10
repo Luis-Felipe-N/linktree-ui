@@ -1,14 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { Link } from '@/lib/types'
+import type { AddLinkBody } from '@/lib/schemas'
 
 export function useLinks(pageId: string | null) {
-  return useQuery({
+  return useQuery<Link[]>({
     queryKey: ['links', pageId],
     queryFn: async () => {
       if (!pageId) return []
       const response = await api.get(`/pages/${pageId}/links`)
-      return response.data as Link[]
+      return response.data.links as Link[]
     },
     enabled: !!pageId,
   })
@@ -18,9 +19,9 @@ export function useCreateLink(pageId: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (data: { title: string; url: string }) => {
+    mutationFn: async (data: AddLinkBody) => {
       const response = await api.post(`/pages/${pageId}/links`, data)
-      return response.data
+      return response.data.links
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['links', pageId] })

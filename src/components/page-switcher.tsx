@@ -42,7 +42,7 @@ export function PageSwitcher() {
     const page = pages?.find(p => p.id === pageId)
     if (page) {
       setActivePage(page)
-      router.push(`/admin/${page.slug}/appearance`)
+      router.push(`/admin/${page.slug}/appearance/theme`)
     }
   }
 

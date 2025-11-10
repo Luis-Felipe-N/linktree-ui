@@ -1,8 +1,7 @@
 import CustomizeColorsButton from '@/components/appearance/customize/customize-colors'
 import { CustomizeButton } from '@/components/style/button'
 
-export function AppearanceTheme() {
-
+export default function AppearanceTheme() {
 
   return (
     <aside className="relative z-10 p-4 lg:w-1/2 inset-0 border-l">

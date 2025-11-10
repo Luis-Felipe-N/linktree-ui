@@ -29,7 +29,7 @@ export function AppSidebar() {
     },
     {
       title: 'Aparência',
-      url: activePage ? `/admin/${activePage.slug}/appearance` : '/admin/appearance/theme',
+      url: activePage ? `/admin/${activePage.slug}/appearance/theme` : '/admin/appearance/theme',
       icon: Palette,
     },
     {

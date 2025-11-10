@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import type { Link as LinkType, Page } from '@/lib/types'
 import Link from 'next/link'
 import Iphone15Pro from '../iphone-15'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 interface TemplateProps {
   links: LinkType[]
@@ -61,15 +62,19 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
             style={containerStyle}
           >
             {/* Profile section */}
-            <div className="text-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-white/10 mx-auto mb-4 flex items-center justify-center text-2xl font-bold" style={{ color: textColor }}>
-                LF
-              </div>
+            <div className="text-center flex items-center flex-col mb-6">
+
+              <Avatar className='w-20 h-20 '>
+                <AvatarImage src={page?.imageUrl || ''} alt={page?.title || 'Avatar'} />
+                <AvatarFallback className='bg-white/10 text-white text-2xl font-bold'>
+                  {page?.title?.charAt(0).toUpperCase() || 'N'}
+                </AvatarFallback>
+              </Avatar>
               <h1 className="text-xl font-bold mb-1" style={{ color: textColor }}>
-                {page?.title || 'Luis Felipe Nunes'}
+                {page?.title || ''}
               </h1>
               <p className="text-sm opacity-90" style={{ color: textColor }}>
-                {page?.description || 'Desenvolvedor Full-Stack'}
+                {page?.description || ''}
               </p>
             </div>
 
