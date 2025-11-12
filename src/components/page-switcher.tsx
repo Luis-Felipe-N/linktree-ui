@@ -50,6 +50,8 @@ export function PageSwitcher() {
     router.push('/pages/new')
   }
 
+  console.log('Rendering PageSwitcher with activePage:', activePage)
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

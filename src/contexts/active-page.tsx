@@ -17,7 +17,6 @@ interface ActivePageProviderProps {
 export function ActivePageProvider({ children }: ActivePageProviderProps) {
   const [activePage, setActivePageState] = useState<Page | null>(null)
 
-  // Salvar no localStorage quando mudar
   const setActivePage = (page: Page | null) => {
     setActivePageState(page)
     if (page) {
@@ -27,7 +26,6 @@ export function ActivePageProvider({ children }: ActivePageProviderProps) {
     }
   }
 
-  // Carregar do localStorage na inicialização
   useEffect(() => {
     const savedPage = localStorage.getItem('activePage')
     if (savedPage) {

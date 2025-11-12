@@ -30,7 +30,6 @@ export default function AdminLinksPage() {
           <section className="mb-8">
             <CopyUrlPage slug={activePage?.slug} />
 
-            {/* IPHONE PREVIEW */}
             <TemplateDefault links={links || []} page={activePage} />
           </section>
         </div>
@@ -45,13 +44,7 @@ export default function AdminLinksPage() {
             </p>
           </div>
 
-          {/* Formulário de Adicionar Link */}
-          <Card className="bg-white rounded-2xl">
-            <CardContent className="pt-6">
-              <h2 className="font-semibold mb-4">Adicionar Novo Link</h2>
-              <AddLinkForm pageId={activePage.id} />
-            </CardContent>
-          </Card>
+          <AddLinkForm pageId={activePage.id} />
 
           {/* Lista de Links Existentes */}
           <div className="space-y-4">
