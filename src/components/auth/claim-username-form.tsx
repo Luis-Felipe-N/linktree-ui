@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Loader2, Check, X } from 'lucide-react'
 import { Input } from '../form/input'
 import { api } from '@/lib/api'

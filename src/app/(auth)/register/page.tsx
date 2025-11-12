@@ -8,13 +8,12 @@ import { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, Suspense } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const registerFormSchema = z.object({
   email: z
-    .string()
     .email({ message: 'Este email não parece válido. Tente outro' }),
   username: z
     .string()
@@ -30,7 +29,7 @@ const registerFormSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
 
-export default function Register() {
+function RegisterForm() {
   const searchParams = useSearchParams()
   const username = searchParams.get('username') ?? ''
   const timeoutRef = useRef<NodeJS.Timeout>(null)
@@ -173,5 +172,17 @@ export default function Register() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function Register() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    }>
+      <RegisterForm />
+    </Suspense>
   )
 }
