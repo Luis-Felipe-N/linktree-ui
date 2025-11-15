@@ -21,7 +21,7 @@ export function CopyUrlPage({ slug }: CopyUrlPageProps) {
 
   return (
     <motion.div
-      className='absolute inline-flex p-2 px-4 rounded-2xl border border-input bg-background/95 backdrop-blur-sm flex-col gap-2 shadow-lg'
+      className=' inline-flex p-2 px-4 rounded-2xl border border-input bg-background/95 backdrop-blur-sm flex-col gap-2 shadow-lg'
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       initial={{ opacity: 0, y: -10, scale: 0.95 }}

@@ -58,7 +58,7 @@ export default function Admin() {
             </p>
           </div>
           <Button asChild>
-            <Link href="/admin/pages/new">
+            <Link href="/">
               <Plus className="w-4 h-4 mr-2" />
               Nova Página
             </Link>

@@ -2,6 +2,7 @@
 
 import TemplateDefault from '@/components/appearance/deafult'
 import { BackgroundGrid } from '@/components/background-grid'
+import { CopyUrlPage } from '@/components/copy-url-page'
 import { CustomizeButton } from '@/components/style/button'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -44,27 +45,7 @@ export default function AdminAppearanceLayout({ children }: AdminAppearanceLayou
 
         <div className="relative z-10">
           <section className="mb-8">
-            <Card className="bg-zinc-50 rounded-3xl">
-              <CardContent>
-                <div className='flex gap-2'>
-                  <Input
-                    className='h-10'
-                    id="profile-url"
-                    type="text"
-                    value={userProfileUrl}
-                    readOnly
-                    onClick={(e) => e.currentTarget.select()}
-                  />
-                  <Button
-                    className='font-semibold bg-slate-500 hover:bg-slate-600 rounded-xl px-4 text-white'
-                    onClick={() => navigator.clipboard.writeText(userProfileUrl)}
-                  >
-                    <Copy size={10} strokeWidth={3} />
-                    Copiar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <CopyUrlPage slug={activePage.slug} />
 
             {!linksLoading && (<TemplateDefault links={links || []} page={activePage} />)}
           </section>

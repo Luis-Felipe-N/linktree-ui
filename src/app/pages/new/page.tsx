@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { api } from "@/lib/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -29,6 +29,8 @@ const MAX_DESCRIPTION_LENGTH = 255
 export default function NewPage() {
   const router = useRouter()
   const [descriptionCount, setDescriptionCount] = useState(0)
+  const searchParams = useSearchParams()
+  const username = searchParams.get('username') ?? ''
 
   const {
     register,
@@ -36,6 +38,9 @@ export default function NewPage() {
     formState: { errors, isSubmitting },
   } = useForm<CreateNewPageData>({
     resolver: zodResolver(createNewPageSchema),
+    defaultValues: {
+      slug: username,
+    },
   })
 
   const handleCreatePage = async (data: CreateNewPageData) => {
@@ -61,23 +66,25 @@ export default function NewPage() {
       </div>
 
       <form onSubmit={handleSubmit(handleCreatePage)} className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="slug">
-            Slug <span className="text-red-500">*</span>
-          </Label>
-          <Input
-            id="slug"
-            placeholder="minha-pagina"
-            {...register("slug")}
-            aria-invalid={errors.slug ? "true" : "false"}
-          />
-          {errors.slug && (
-            <p className="text-sm text-red-500">{errors.slug.message}</p>
-          )}
-          <p className="text-muted-foreground text-xs">
-            Este será o endereço da sua página: melinks.com/<strong>seu-slug</strong>
-          </p>
-        </div>
+        {!username && (
+          <div className="space-y-2">
+            <Label htmlFor="slug">
+              Slug <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="slug"
+              placeholder="minha-pagina"
+              {...register("slug")}
+              aria-invalid={errors.slug ? "true" : "false"}
+            />
+            {errors.slug && (
+              <p className="text-sm text-red-500">{errors.slug.message}</p>
+            )}
+            <p className="text-muted-foreground text-xs">
+              Este será o endereço da sua página: melinks.com/<strong>seu-slug</strong>
+            </p>
+          </div>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="title">Título</Label>
