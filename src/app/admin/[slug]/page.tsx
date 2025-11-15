@@ -9,8 +9,8 @@ export default function AdminPageIndex() {
   const slug = params.slug as string
 
   useEffect(() => {
-    // Redirect to appearance tab by default
-    router.replace(`/admin/${slug}/appearance`)
+    // Redirect to appearance theme by default
+    router.replace(`/admin/${slug}/appearance/theme`)
   }, [router, slug])
 
   return null

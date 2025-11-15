@@ -21,28 +21,18 @@ import { PageSwitcher } from './page-switcher'
 export function AppSidebar() {
   const { activePage } = useActivePage()
 
-  const items = [
+  const items = activePage ? [
     {
       title: 'Links',
-      url: activePage ? `/admin/${activePage.slug}/links` : '/admin/links',
+      url: `/admin/${activePage.slug}/links`,
       icon: LinkIcon,
     },
     {
       title: 'Aparência',
-      url: activePage ? `/admin/${activePage.slug}/appearance/theme` : '/admin/appearance/theme',
+      url: `/admin/${activePage.slug}/appearance/theme`,
       icon: Palette,
     },
-    {
-      title: 'Perfil',
-      url: '/admin/profile',
-      icon: User,
-    },
-    {
-      title: 'Configurações',
-      url: '/admin/settings',
-      icon: Settings,
-    },
-  ]
+  ] : []
   return (
     <Sidebar className='p-4'>
       <SidebarHeader>

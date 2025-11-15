@@ -43,8 +43,8 @@ export default function NewPage() {
       const response = await api.post('/pages', data)
       const newPage = response.data
 
-      // Redirecionar para a página de administração
-      router.push(`/admin/pages/${newPage.slug}`)
+      // Redirecionar para a página de aparência da nova página
+      router.push(`/admin/${newPage.slug}/appearance/theme`)
     } catch (error) {
       console.error('Erro ao criar nova página:', error)
       alert('Erro ao criar nova página. Tente novamente.')
