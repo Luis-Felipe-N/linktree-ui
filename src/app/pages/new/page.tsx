@@ -8,7 +8,7 @@ import { api } from "@/lib/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -26,7 +26,7 @@ type CreateNewPageData = z.infer<typeof createNewPageSchema>
 
 const MAX_DESCRIPTION_LENGTH = 255
 
-export default function NewPage() {
+function NewPageForm() {
   const router = useRouter()
   const [descriptionCount, setDescriptionCount] = useState(0)
   const searchParams = useSearchParams()
@@ -144,5 +144,17 @@ export default function NewPage() {
         </div>
       </form>
     </main>
+  )
+}
+
+export default function NewPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    }>
+      <NewPageForm />
+    </Suspense>
   )
 }
