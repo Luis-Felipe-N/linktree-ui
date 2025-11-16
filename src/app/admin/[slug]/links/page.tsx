@@ -8,6 +8,7 @@ import { AddLinkForm } from '@/components/admin/add-link-form'
 import { useLinks } from '@/hooks/use-links'
 import { CopyUrlPage } from '@/components/copy-url-page'
 import { SharePageDialog } from '@/components/share-page-dialog'
+import { BackgroundGrid } from '@/components/background-grid'
 
 export default function AdminLinksPage() {
   const { activePage } = useActivePage()
@@ -26,17 +27,22 @@ export default function AdminLinksPage() {
 
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden lg:flex-row">
-      <div className="relative z-10 flex-1 p-6 bg-zinc-50/50">
+      <div className="relative z-10 flex-1 p-6">
+        <BackgroundGrid
+          className="pointer-events-none absolute inset-0 opacity-60"
+          cellSize={20}
+          lineColor="rgba(113, 113, 122, 0.15)"
+        />
         <div className="relative z-10">
           <section className="mb-8">
-            <CopyUrlPage slug={activePage?.slug} />
+            <SharePageDialog slug={activePage.slug} title={activePage.title || undefined} />
 
             <TemplateDefault links={links || []} page={activePage} />
           </section>
         </div>
       </div>
 
-      <aside className="relative z-10 p-4 lg:w-1/2 bg-slate-100 overflow-y-auto">
+      <aside className="relative z-10 p-4 lg:w-1/2 overflow-y-auto border-l">
         <div className="mt-8 space-y-6">
           <div className="flex items-center justify-between">
             <div>

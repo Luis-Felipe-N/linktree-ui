@@ -30,16 +30,13 @@ export function ClaimUsernameForm({ redirectTo }: ClaimUsernameFormProps) {
       return
     }
 
-    // Iniciar loading
     setIsChecking(true)
     setUsernameIsValid(null)
 
-    // Limpar timeout anterior
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
 
-    // Debounce de 700ms
     timeoutRef.current = setTimeout(async () => {
       try {
         const response = await api.get(`/users/search?username=${term}`)
@@ -82,7 +79,7 @@ export function ClaimUsernameForm({ redirectTo }: ClaimUsernameFormProps) {
         value={username}
         onChange={(e) => handleSearch(e.target.value)}
       >
-        {/* Ícone de validação */}
+
         <div className="flex items-center justify-center w-5">
           {isChecking ? (
             <Loader2 className="animate-spin text-zinc-500" size={16} />

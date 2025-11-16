@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 import { Loader2, ExternalLink } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface Link {
   id: string
@@ -91,12 +92,12 @@ export default function PublicPage() {
 
   const handleLinkClick = (link: Link) => {
     // Registrar clique na API (analytics)
-    api.post(`/links/${link.id}/click`).catch(() => {})
-    
+    api.post(`/links/${link.id}/click`).catch(() => { })
+
     // Abrir link
     window.open(link.url, '_blank', 'noopener,noreferrer')
   }
-
+  console.log('Rendering PublicPage with data:', pageData)
   return (
     <div
       className="min-h-screen py-12 px-4"
@@ -193,7 +194,7 @@ export default function PublicPage() {
                         className="h-10 w-10 rounded-lg object-cover flex-shrink-0"
                       />
                     )}
-                    
+
                     <span className="flex-1 text-left font-medium">
                       {link.title || link.url}
                     </span>
@@ -224,7 +225,7 @@ export default function PublicPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.8 }}
         >
-          <p>Criado com ❤️</p>
+          <p>Criado com <Link href="https://biosites.vercel.app/">biosites</Link></p>
         </motion.div>
       </div>
     </div>

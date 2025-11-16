@@ -47,7 +47,6 @@ export default function AdminAppearanceLayout({ children }: AdminAppearanceLayou
         <div className="relative z-10">
           <section className="mb-8">
             <div className="flex items-center justify-between gap-4 mb-4">
-              <CopyUrlPage slug={activePage.slug} />
               <SharePageDialog slug={activePage.slug} title={activePage.title || undefined} />
             </div>
 
