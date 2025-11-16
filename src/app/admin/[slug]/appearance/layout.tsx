@@ -3,6 +3,7 @@
 import TemplateDefault from '@/components/appearance/deafult'
 import { BackgroundGrid } from '@/components/background-grid'
 import { CopyUrlPage } from '@/components/copy-url-page'
+import { SharePageDialog } from '@/components/share-page-dialog'
 import { CustomizeButton } from '@/components/style/button'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -45,7 +46,10 @@ export default function AdminAppearanceLayout({ children }: AdminAppearanceLayou
 
         <div className="relative z-10">
           <section className="mb-8">
-            <CopyUrlPage slug={activePage.slug} />
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <CopyUrlPage slug={activePage.slug} />
+              <SharePageDialog slug={activePage.slug} title={activePage.title || undefined} />
+            </div>
 
             {!linksLoading && (<TemplateDefault links={links || []} page={activePage} />)}
           </section>

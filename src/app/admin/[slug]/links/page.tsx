@@ -7,6 +7,7 @@ import TemplateDefault from '@/components/appearance/deafult'
 import { AddLinkForm } from '@/components/admin/add-link-form'
 import { useLinks } from '@/hooks/use-links'
 import { CopyUrlPage } from '@/components/copy-url-page'
+import { SharePageDialog } from '@/components/share-page-dialog'
 
 export default function AdminLinksPage() {
   const { activePage } = useActivePage()
@@ -37,11 +38,14 @@ export default function AdminLinksPage() {
 
       <aside className="relative z-10 p-4 lg:w-1/2 bg-slate-100 overflow-y-auto">
         <div className="mt-8 space-y-6">
-          <div>
-            <h1 className="text-2xl font-bold">Gerenciar Links</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Adicione e organize os links da sua página
-            </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">Gerenciar Links</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Adicione e organize os links da sua página
+              </p>
+            </div>
+            <SharePageDialog slug={activePage.slug} title={activePage.title || undefined} />
           </div>
 
           <AddLinkForm pageId={activePage.id} />

@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useState, Suspense } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { motion } from "framer-motion"
 
 const createNewPageSchema = z.object({
   slug: z
@@ -58,16 +59,32 @@ function NewPageForm() {
 
   return (
     <main className="mx-auto max-w-2xl p-6">
-      <div className="mb-8">
+      <motion.div
+        className="mb-8"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <h1 className="text-3xl font-bold">Criar Nova Página</h1>
         <p className="text-muted-foreground mt-2">
           Preencha os campos abaixo para criar uma nova página
         </p>
-      </div>
+      </motion.div>
 
-      <form onSubmit={handleSubmit(handleCreatePage)} className="space-y-6">
+      <motion.form
+        onSubmit={handleSubmit(handleCreatePage)}
+        className="space-y-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         {!username && (
-          <div className="space-y-2">
+          <motion.div
+            className="space-y-2"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
             <Label htmlFor="slug">
               Slug <span className="text-red-500">*</span>
             </Label>
@@ -78,15 +95,28 @@ function NewPageForm() {
               aria-invalid={errors.slug ? "true" : "false"}
             />
             {errors.slug && (
-              <p className="text-sm text-red-500">{errors.slug.message}</p>
+              <motion.p
+                className="text-sm text-red-500"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {errors.slug.message}
+              </motion.p>
             )}
             <p className="text-muted-foreground text-xs">
               Este será o endereço da sua página: melinks.com/<strong>seu-slug</strong>
             </p>
-          </div>
+          </motion.div>
         )}
 
-        <div className="space-y-2">
+        <motion.div
+          className="space-y-2"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
           <Label htmlFor="title">Título</Label>
           <Input
             id="title"
@@ -95,11 +125,24 @@ function NewPageForm() {
             aria-invalid={errors.title ? "true" : "false"}
           />
           {errors.title && (
-            <p className="text-sm text-red-500">{errors.title.message}</p>
+            <motion.p
+              className="text-sm text-red-500"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {errors.title.message}
+            </motion.p>
           )}
-        </div>
+        </motion.div>
 
-        <div className="space-y-2">
+        <motion.div
+          className="space-y-2"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+        >
           <Label htmlFor="description">Descrição</Label>
           <Textarea
             id="description"
@@ -110,7 +153,15 @@ function NewPageForm() {
             aria-invalid={errors.description ? "true" : "false"}
           />
           {errors.description && (
-            <p className="text-sm text-red-500">{errors.description.message}</p>
+            <motion.p
+              className="text-sm text-red-500"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {errors.description.message}
+            </motion.p>
           )}
           <p
             className="text-muted-foreground text-right text-xs"
@@ -122,9 +173,14 @@ function NewPageForm() {
             </span>{" "}
             caracteres restantes
           </p>
-        </div>
+        </motion.div>
 
-        <div className="flex gap-3 pt-4">
+        <motion.div
+          className="flex gap-3 pt-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
+        >
           <Button
             type="button"
             variant="outline"
@@ -141,8 +197,8 @@ function NewPageForm() {
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Criar Página
           </Button>
-        </div>
-      </form>
+        </motion.div>
+      </motion.form>
     </main>
   )
 }
