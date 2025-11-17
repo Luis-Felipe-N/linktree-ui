@@ -34,23 +34,10 @@ export function SharePageDialog({ slug, title }: SharePageDialogProps) {
   const [copied, setCopied] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 })
   const triggerRef = useRef<HTMLButtonElement>(null)
   const pageUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/${slug}`
 
   const handleOpenChange = (open: boolean) => {
-    if (open && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
-      const viewportCenterX = window.innerWidth / 2
-      const viewportCenterY = window.innerHeight / 2
-
-      setTriggerPosition({
-        x: ((centerX - viewportCenterX) / viewportCenterX) * 50, // Convert to percentage for transform-origin
-        y: ((centerY - viewportCenterY) / viewportCenterY) * 50,
-      })
-    }
     setIsOpen(open)
   }
 
@@ -91,9 +78,7 @@ export function SharePageDialog({ slug, title }: SharePageDialogProps) {
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-md overflow-visible"
-        style={{
-          transformOrigin: `calc(50% + ${triggerPosition.x}px) calc(50% + ${triggerPosition.y}px)`
-        }}
+
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -159,7 +144,6 @@ export function SharePageDialog({ slug, title }: SharePageDialogProps) {
               </div>
             </div>
 
-            {/* Botão Ver Página */}
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 variant="outline"
@@ -171,7 +155,6 @@ export function SharePageDialog({ slug, title }: SharePageDialogProps) {
               </Button>
             </motion.div>
 
-            {/* Compartilhar em Redes Sociais */}
             <div className="space-y-3">
               <Label>Compartilhar em</Label>
               <div className="grid grid-cols-2 gap-2">
@@ -220,7 +203,6 @@ export function SharePageDialog({ slug, title }: SharePageDialogProps) {
               </div>
             </div>
 
-            {/* QR Code (placeholder - pode adicionar biblioteca QR depois) */}
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 variant="outline"

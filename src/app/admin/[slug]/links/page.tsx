@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react'
 import { useActivePage } from '@/contexts/active-page'
 import TemplateDefault from '@/components/appearance/deafult'
 import { AddLinkForm } from '@/components/admin/add-link-form'
+import { EditLinkItem } from '@/components/admin/edit-link-item'
 import { useLinks } from '@/hooks/use-links'
 import { CopyUrlPage } from '@/components/copy-url-page'
 import { SharePageDialog } from '@/components/share-page-dialog'
@@ -65,21 +66,9 @@ export default function AdminLinksPage() {
                 <p className="text-sm text-muted-foreground">Carregando links...</p>
               </div>
             ) : links && links.length > 0 ? (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {links.map((link) => (
-                  <Card key={link.id} className="bg-white py-4">
-                    <CardContent className="px-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h3 className="font-medium">{link.title || 'Sem título'}</h3>
-                          <p className="text-sm text-muted-foreground truncate">
-                            {link.url}
-                          </p>
-                        </div>
-
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <EditLinkItem key={link.id} link={link} pageId={activePage.id} />
                 ))}
               </div>
             ) : (
