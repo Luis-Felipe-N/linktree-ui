@@ -34,7 +34,7 @@ export function useUpdateLink(pageId: string) {
 
   return useMutation({
     mutationFn: async ({ linkId, data }: { linkId: string; data: Partial<Link> }) => {
-      const response = await api.patch(`/links/${linkId}`, data)
+      const response = await api.put(`/links/${linkId}`, data)
       return response.data
     },
     onSuccess: () => {

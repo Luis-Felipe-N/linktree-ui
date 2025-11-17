@@ -2,14 +2,20 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from '@/components/ui/button'
 import { useAppearanceContext } from '@/contexts/appearance'
+import { useActivePage } from '@/contexts/active-page'
+import { useUpdatePageTheme } from '@/hooks/use-pages'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
+import { Save, Loader2 } from 'lucide-react'
 import THEME_PRESETS from '@/lib/theme-presets'
 
 export function CustomizeColorsButton() {
   const { theme, updateButtonStyle, updateBackground } = useAppearanceContext()
+  const { activePage } = useActivePage()
+  const updateTheme = useUpdatePageTheme(activePage?.id || '')
 
   const [backgroundColor, setBackgroundColor] = useState(
     theme?.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000'
@@ -17,6 +23,23 @@ export function CustomizeColorsButton() {
   const [textColor, setTextColor] = useState(
     theme?.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff'
   )
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
+  const handleSaveTheme = async () => {
+    if (!activePage?.id) {
+      alert('Nenhuma página ativa')
+      return
+    }
+
+    try {
+      await updateTheme.mutateAsync(theme)
+      setHasUnsavedChanges(false)
+      alert('Tema salvo com sucesso!')
+    } catch (error) {
+      console.error('Erro ao salvar tema:', error)
+      alert('Erro ao salvar tema. Tente novamente.')
+    }
+  }
 
   const handlePresetChange = (preset: typeof THEME_PRESETS[number]) => {
     if (preset.theme.background) {
@@ -27,6 +50,7 @@ export function CustomizeColorsButton() {
     }
     setBackgroundColor(preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000')
     setTextColor(preset.theme.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff')
+    setHasUnsavedChanges(true)
   }
 
   const handleBackgroundChange = (color: string) => {
@@ -39,6 +63,7 @@ export function CustomizeColorsButton() {
         properties: { color: theme.buttonStyle?.textStyle?.properties?.color ?? '#ffffff' },
       },
     })
+    setHasUnsavedChanges(true)
   }
 
   const handleTextChange = (color: string) => {
@@ -51,13 +76,37 @@ export function CustomizeColorsButton() {
         properties: { backgroundColor: theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor ?? '#000000' },
       },
     })
+    setHasUnsavedChanges(true)
   }
 
   return (
     <Card className="shadow-none">
       <CardHeader>
-        <CardTitle>Temas Recomendados</CardTitle>
-        <CardDescription>Personalize as cores de fundo e texto dos botões</CardDescription>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Temas Recomendados</CardTitle>
+            <CardDescription>Personalize as cores de fundo e texto dos botões</CardDescription>
+          </div>
+          <Button
+            onClick={handleSaveTheme}
+            disabled={updateTheme.isPending || !activePage?.id || !hasUnsavedChanges}
+            size="sm"
+            className="gap-2"
+            variant={hasUnsavedChanges ? "default" : "outline"}
+          >
+            {updateTheme.isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Salvando...
+              </>
+            ) : (
+              <>
+                <Save className="h-4 w-4" />
+                {hasUnsavedChanges ? 'Salvar Alterações' : 'Salvo'}
+              </>
+            )}
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="presets" className='w-full'>

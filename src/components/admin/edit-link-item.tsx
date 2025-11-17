@@ -93,7 +93,7 @@ export function EditLinkItem({ link, pageId }: EditLinkItemProps) {
       transition={{ duration: 0.3 }}
     >
       <Card className="bg-white">
-        <CardContent className="p-4">
+        <CardContent className="">
           <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
             {/* Header com ações */}
             <div className="flex items-center justify-between gap-2">
@@ -106,15 +106,15 @@ export function EditLinkItem({ link, pageId }: EditLinkItemProps) {
                 >
                   <GripVertical className="h-5 w-5" />
                 </motion.button>
-                
+
                 <div className="flex items-center gap-2">
                   <Switch
                     id={`active-${link.id}`}
                     checked={isActive}
                     onCheckedChange={handleActiveToggle}
                   />
-                  <Label 
-                    htmlFor={`active-${link.id}`} 
+                  <Label
+                    htmlFor={`active-${link.id}`}
                     className="text-xs font-medium cursor-pointer flex items-center gap-1"
                   >
                     {isActive ? (

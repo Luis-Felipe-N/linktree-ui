@@ -1,8 +1,8 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
-import type { Page } from '@/lib/types'
+import type { Page, AppearanceTheme } from '@/lib/types'
 
 export function usePages() {
   return useQuery({
@@ -43,5 +43,36 @@ export function usePage(pageSlug: string | null) {
     },
     enabled: !!pageSlug,
     retry: 1,
+  })
+}
+
+export function useUpdatePage(pageId: string) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (data: Partial<Page>) => {
+      const response = await api.patch(`/pages/${pageId}`, data)
+      return response.data
+    },
+    onSuccess: (_, variables) => {
+      // Invalidate both page queries
+      queryClient.invalidateQueries({ queryKey: ['pages'] })
+      queryClient.invalidateQueries({ queryKey: ['page'] })
+    },
+  })
+}
+
+export function useUpdatePageTheme(pageId: string) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (theme: AppearanceTheme) => {
+      const response = await api.patch(`/pages/${pageId}/theme`, { theme })
+      return response.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pages'] })
+      queryClient.invalidateQueries({ queryKey: ['page'] })
+    },
   })
 }
