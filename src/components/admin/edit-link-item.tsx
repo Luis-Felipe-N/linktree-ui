@@ -8,15 +8,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select'
-import { Trash2, Save, X, GripVertical, ChevronDown, ChevronUp } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
+import { Trash2, Save, X, GripVertical, ChevronDown, ChevronUp, Eye, EyeOff } from 'lucide-react'
 import { useUpdateLink, useDeleteLink } from '@/hooks/use-links'
 import type { Link } from '@/lib/types'
 import { addLinkBodySchema, type AddLinkBody } from '@/lib/schemas'
@@ -29,7 +22,8 @@ interface EditLinkItemProps {
 export function EditLinkItem({ link, pageId }: EditLinkItemProps) {
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  
+  const [isActive, setIsActive] = useState(link.active !== false) // Default true
+
   const updateLink = useUpdateLink(pageId)
   const deleteLink = useDeleteLink(pageId)
 
@@ -46,21 +40,34 @@ export function EditLinkItem({ link, pageId }: EditLinkItemProps) {
       title: link.title || '',
       thumbnailUrl: link.thumbnailUrl || '',
       highlightEffect: link.highlightEffect || '',
-      type: (link.type as 'link' | 'embed' | 'header') || 'link',
     },
   })
-
-  const watchedType = watch('type')
 
   const handleUpdate = async (data: AddLinkBody) => {
     try {
       await updateLink.mutateAsync({
         linkId: link.id,
-        data,
+        data: {
+          ...data,
+          active: isActive,
+        },
       })
     } catch (error) {
       console.error('Erro ao atualizar link:', error)
       alert('Erro ao atualizar link. Tente novamente.')
+    }
+  }
+
+  const handleActiveToggle = async (checked: boolean) => {
+    setIsActive(checked)
+    try {
+      await updateLink.mutateAsync({
+        linkId: link.id,
+        data: { active: checked },
+      })
+    } catch (error) {
+      console.error('Erro ao atualizar status:', error)
+      setIsActive(!checked) // Revert on error
     }
   }
 
@@ -99,19 +106,30 @@ export function EditLinkItem({ link, pageId }: EditLinkItemProps) {
                 >
                   <GripVertical className="h-5 w-5" />
                 </motion.button>
-                <Select
-                  value={watchedType}
-                  onValueChange={(value) => setValue('type', value as 'link' | 'embed' | 'header', { shouldDirty: true })}
-                >
-                  <SelectTrigger className="w-[130px] h-8">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="link">🔗 Link</SelectItem>
-                    <SelectItem value="header">📌 Header</SelectItem>
-                    <SelectItem value="embed">🎬 Embed</SelectItem>
-                  </SelectContent>
-                </Select>
+                
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id={`active-${link.id}`}
+                    checked={isActive}
+                    onCheckedChange={handleActiveToggle}
+                  />
+                  <Label 
+                    htmlFor={`active-${link.id}`} 
+                    className="text-xs font-medium cursor-pointer flex items-center gap-1"
+                  >
+                    {isActive ? (
+                      <>
+                        <Eye className="h-3 w-3" />
+                        Ativo
+                      </>
+                    ) : (
+                      <>
+                        <EyeOff className="h-3 w-3" />
+                        Inativo
+                      </>
+                    )}
+                  </Label>
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
