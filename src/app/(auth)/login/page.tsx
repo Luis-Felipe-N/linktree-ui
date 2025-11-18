@@ -70,19 +70,32 @@ export default function Login() {
               {errors.root.message}
             </p>
           )}
+          {errors.username && (
+            <p className="text-start mt-2 text-sm text-red-400 mb-2 font-bold">
+              {errors.username.message}
+            </p>
+          )}
+
 
           <Input
             {...register('username')}
             placeholder="Usuário"
             autoComplete="username"
           />
+
+          {errors.password && (
+            <p className="text-start mt-2 text-sm text-red-400  font-bold">
+              {errors.password.message}
+            </p>
+          )}
           <Input
             {...register('password')}
             placeholder="Senha"
             type="password"
-            className="mt-4"
+            className="mt-2"
             autoComplete="current-password"
           />
+
 
           <button
             className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed w-full mt-4"

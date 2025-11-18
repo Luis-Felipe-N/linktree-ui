@@ -67,7 +67,7 @@ export function useUpdatePageTheme(pageId: string) {
 
   return useMutation({
     mutationFn: async (theme: AppearanceTheme) => {
-      const response = await api.patch(`/pages/${pageId}/theme`, { theme })
+      const response = await api.put(`/pages/${pageId}/theme`, { theme })
       return response.data
     },
     onSuccess: () => {
