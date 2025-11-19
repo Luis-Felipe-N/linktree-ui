@@ -50,6 +50,15 @@ export interface Theme {
   background?: Background | null
   buttonId?: string | null
   button?: Button | null
+
+  // Campos adicionais do schema Prisma
+  key?: string | null
+  editable?: boolean | null
+  luminance?: string | null
+  typeface?: any | null // JSON
+  socialStyle?: any | null // JSON
+  heading?: any | null // JSON
+  footer?: any | null // JSON
 }
 
 export interface Background {
@@ -58,14 +67,18 @@ export interface Background {
   active: boolean
 
   type: string
+  style?: string | null
+  className?: string | null
+  properties?: any | null // JSON - CSSProperties
+  noise?: boolean | null
+
+  // Campos opcionais para compatibilidade
   color?: string | null
   gradientStart?: string | null
   gradientEnd?: string | null
   gradientDirection?: string | null
   imageUrl?: string | null
   videoUrl?: string | null
-
-  style?: string | null
 
   themes?: Theme[]
 }
@@ -76,12 +89,8 @@ export interface Button {
   active: boolean
 
   style: string
-  color: string
-  textColor: string
-  fontFamily?: string | null
-  fontWeight?: string | null
-  shadowStyle?: string | null
-  shadowColor?: string | null
+  className?: string | null
+  properties?: any | null // JSON - contém color, textColor, shadowStyle, cornerStyle, textStyle, backgroundStyle, shapeStyle
 
   themes?: Theme[]
 }
