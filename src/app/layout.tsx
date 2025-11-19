@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { AuthProvider } from '@/contexts/auth'
 import './global.css'
-import AppearanceProvider from '@/contexts/appearance'
 import { ReactQueryProvider } from '@/lib/providers/react-query-provider'
 import { ActivePageProvider } from '@/contexts/active-page'
 
@@ -34,9 +33,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AuthProvider>
             <ActivePageProvider>
-              <AppearanceProvider>
-                {children}
-              </AppearanceProvider>
+              {children}
             </ActivePageProvider>
           </AuthProvider>
         </ReactQueryProvider>

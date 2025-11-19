@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { Page, AppearanceTheme } from '@/lib/types'
+import useAppearance from './use-appearance'
 
 export function usePages() {
   return useQuery({
@@ -17,24 +18,14 @@ export function usePages() {
 }
 
 export function usePage(pageSlug: string | null) {
-
-  console.log('Fetching page with:', pageSlug)
   return useQuery({
     queryKey: ['page', pageSlug],
     queryFn: async () => {
       if (!pageSlug) return null
 
-
       try {
         const response = await api.get(`/pages/${pageSlug}`)
-        const data = response.data.page
-
-        if (data.props) {
-          const page = { ...data.props, id: data._id?.value || data.id }
-          console.log('Formatted page:', page)
-          return page
-        }
-
+        useAppearance(response.data.theme)
         return response.data
       } catch (error) {
         console.error('Failed to fetch page:', error)
@@ -51,7 +42,7 @@ export function useUpdatePage(pageId: string) {
 
   return useMutation({
     mutationFn: async (data: Partial<Page>) => {
-      const response = await api.patch(`/pages/${pageId}`, data)
+      const response = await api.put(`/pages/${pageId}`, data)
       return response.data
     },
     onSuccess: (_, variables) => {
@@ -67,7 +58,7 @@ export function useUpdatePageTheme(pageId: string) {
 
   return useMutation({
     mutationFn: async (theme: AppearanceTheme) => {
-      const response = await api.patch(`/pages/${pageId}/theme`, { theme })
+      const response = await api.put(`/pages/${pageId}/theme`, { theme })
       return response.data
     },
     onSuccess: () => {
