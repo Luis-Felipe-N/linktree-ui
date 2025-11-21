@@ -90,8 +90,6 @@ export default function Login() {
             </p>
           )}
 
-
-<<<<<<< HEAD
           <div className="space-y-4">
             <div className="space-y-2">
               <Input
@@ -121,30 +119,6 @@ export default function Login() {
 
           <Button
             className="w-full h-12 text-base font-semibold mt-6"
-=======
-          <Input
-            {...register('username')}
-            placeholder="Usuário"
-            autoComplete="username"
-          />
-
-          {errors.password && (
-            <p className="text-start mt-2 text-sm text-red-400  font-bold">
-              {errors.password.message}
-            </p>
-          )}
-          <Input
-            {...register('password')}
-            placeholder="Senha"
-            type="password"
-            className="mt-2"
-            autoComplete="current-password"
-          />
-
-
-          <button
-            className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-80 disabled:cursor-not-allowed w-full mt-4"
->>>>>>> 971ed5d9f53b85f136fa466c708fa90ff8cfcec1
             disabled={isSubmitting}
             type="submit"
           >
