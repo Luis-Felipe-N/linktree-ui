@@ -13,15 +13,15 @@ import { Save, Loader2 } from 'lucide-react'
 import THEME_PRESETS from '@/lib/theme-presets'
 
 export function CustomizeColorsButton() {
-  const { theme, updateButtonStyle, updateBackground } = useAppearanceContext()
+  const { theme, updatebutton, updateBackground } = useAppearanceContext()
   const { activePage } = useActivePage()
   const updateTheme = useUpdatePageTheme(activePage?.id || '')
 
   const [backgroundColor, setBackgroundColor] = useState(
-    theme?.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000'
+    theme?.button?.properties?.backgroundColor?.toString() ?? '#000000'
   )
   const [textColor, setTextColor] = useState(
-    theme?.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff'
+    theme?.button?.properties?.color?.toString() ?? '#ffffff'
   )
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
@@ -45,22 +45,19 @@ export function CustomizeColorsButton() {
     if (preset.theme.background) {
       updateBackground(preset.theme.background)
     }
-    if (preset.theme.buttonStyle) {
-      updateButtonStyle(preset.theme.buttonStyle)
+    if (preset.theme.button) {
+      updatebutton(preset.theme.button)
     }
-    setBackgroundColor(preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000')
-    setTextColor(preset.theme.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff')
+    setBackgroundColor(preset.theme.button?.properties?.backgroundColor?.toString() ?? '#000000')
+    setTextColor(preset.theme.button?.properties?.color?.toString() ?? '#ffffff')
     setHasUnsavedChanges(true)
   }
 
   const handleBackgroundChange = (color: string) => {
     setBackgroundColor(color)
-    updateButtonStyle({
-      backgroundStyle: {
-        properties: { backgroundColor: color },
-      },
-      textStyle: {
-        properties: { color: theme.buttonStyle?.textStyle?.properties?.color ?? '#ffffff' },
+    updatebutton({
+      properties: {
+        backgroundColor: color,
       },
     })
     setHasUnsavedChanges(true)
@@ -68,40 +65,37 @@ export function CustomizeColorsButton() {
 
   const handleTextChange = (color: string) => {
     setTextColor(color)
-    updateButtonStyle({
-      textStyle: {
-        properties: { color: color },
-      },
-      backgroundStyle: {
-        properties: { backgroundColor: theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor ?? '#000000' },
+    updatebutton({
+      properties: {
+        color,
       },
     })
     setHasUnsavedChanges(true)
   }
 
   return (
-    <Card className="shadow-none">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>Temas Recomendados</CardTitle>
-            <CardDescription>Personalize as cores de fundo e texto dos botões</CardDescription>
+    <Card className="shadow-sm border-border/50">
+      <CardHeader className="pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-semibold">Temas Recomendados</CardTitle>
+            <CardDescription className="text-sm">Personalize as cores de fundo e texto dos botões</CardDescription>
           </div>
           <Button
             onClick={handleSaveTheme}
             disabled={updateTheme.isPending || !activePage?.id || !hasUnsavedChanges}
             size="sm"
-            className="gap-2"
+            className={`gap-2 transition-all duration-300 ${hasUnsavedChanges ? 'w-full sm:w-auto' : 'w-full sm:w-auto opacity-80'}`}
             variant={hasUnsavedChanges ? "default" : "outline"}
           >
             {updateTheme.isPending ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="size-4 animate-spin" />
                 Salvando...
               </>
             ) : (
               <>
-                <Save className="h-4 w-4" />
+                <Save className="size-4" />
                 {hasUnsavedChanges ? 'Salvar Alterações' : 'Salvo'}
               </>
             )}
@@ -110,70 +104,89 @@ export function CustomizeColorsButton() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="presets" className='w-full'>
-          <TabsList className='w-full space-x-2 mb-2'>
-            <TabsTrigger value="presets" className='bg-slate-100 h-12'>Presets</TabsTrigger>
-            <TabsTrigger value="custom" className='bg-slate-100 h-12'>Custom</TabsTrigger>
+          <TabsList className='w-full grid grid-cols-2 mb-6 bg-muted/50 p-1 rounded-xl'>
+            <TabsTrigger value="presets" className='rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all'>Presets</TabsTrigger>
+            <TabsTrigger value="custom" className='rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all'>Custom</TabsTrigger>
           </TabsList>
-          <TabsContent className='w-full' value="presets">
-            <div className="flex flex-wrap gap-3 mt-4">
+          <TabsContent className='w-full mt-0' value="presets">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {THEME_PRESETS.map((preset) => (
                 <button
                   key={preset.key}
                   onClick={() => handlePresetChange(preset)}
-                  className="min-w-48 group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary transition-all p-4 text-left px-8"
+                  className="group relative overflow-hidden rounded-xl border border-border/50 hover:border-primary/50 hover:shadow-md transition-all duration-200 aspect-[4/3] flex flex-col items-center justify-center text-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                 >
                   {/* Background Preview */}
                   <div
-                    className="absolute inset-0 group-hover:opacity-70 transition-opacity"
+                    className="p-4 gap-2 w-full h-full bg-black/10 group-hover:bg-black/0 transition-colors duration-300"
                     style={preset.theme.background?.properties || {}}
-                  />
+                  >
 
-                  {/* Content */}
-                  <div className="relative z-10" style={{ color: preset.theme.buttonStyle?.textStyle?.properties?.color }}>
-                    <div className="font-semibold text-sm mb-1">{preset.title}</div>
-
-                    {/* Button Preview */}
-                    <div className="flex justify-center mt-2">
-                      <span
-                        className="inline-block px-3 py-1.5 text-xs font-medium rounded"
-                        style={{
-                          backgroundColor: preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor,
-                          color: preset.theme.buttonStyle?.textStyle?.properties?.color,
-                          border: preset.theme.buttonStyle?.shapeStyle?.properties?.border as string,
-                          boxShadow: preset.theme.buttonStyle?.shadowStyle?.properties?.boxShadow as string,
-                          borderRadius: preset.theme.buttonStyle?.shapeStyle?.properties?.borderRadius as string,
-                        }}
+                    <div className="relative z-10 flex flex-col items-center gap-2">
+                      <div className="font-medium text-sm drop-shadow-md">{preset.title}</div>
+                      <div
+                        className="w-full max-w-[80%] h-8 rounded flex items-center justify-center text-[10px] shadow-sm"
+                        style={preset.theme.button?.properties || {}}
                       >
-                        Preview
-                      </span>
+                        Botão
+                      </div>
                     </div>
                   </div>
+
                 </button>
               ))}
             </div>
           </TabsContent>
-          <TabsContent className='w-full space-y-2' value="custom">
-            <div className="flex items-center justify-between gap-3">
-              <Label htmlFor="bg-color">Cor de Fundo</Label>
-              <Input
-                id="bg-color"
-                type="color"
-                value={backgroundColor}
-                onChange={(e) => handleBackgroundChange(e.target.value)}
-                className="w-20 h-10 cursor-pointer"
-              />
-            </div>
+          <TabsContent className='w-full space-y-4' value="custom">
+            <div className="grid gap-4 p-4 border border-border/50 rounded-xl bg-muted/10">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <Label htmlFor="bg-color" className="text-sm font-medium">Cor de Fundo</Label>
+                  <p className="text-xs text-muted-foreground">Cor principal do botão</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono text-muted-foreground uppercase">{backgroundColor}</span>
+                  <div className="relative overflow-hidden rounded-full border border-border shadow-sm w-10 h-10 transition-transform active:scale-95">
+                    <Input
+                      id="bg-color"
+                      type="color"
+                      value={backgroundColor}
+                      onChange={(e) => handleBackgroundChange(e.target.value)}
+                      className="absolute inset-0 w-[150%] h-[150%] -top-[25%] -left-[25%] p-0 border-none cursor-pointer opacity-0"
+                    />
+                    <div
+                      className="w-full h-full pointer-events-none"
+                      style={{ backgroundColor }}
+                    />
+                  </div>
+                </div>
+              </div>
 
-            {/* Text Color */}
-            <div className="flex items-center justify-between gap-3">
-              <Label htmlFor="text-color">Cor do Texto</Label>
-              <Input
-                id="text-color"
-                type="color"
-                value={textColor}
-                onChange={(e) => handleTextChange(e.target.value)}
-                className="w-20 h-10 cursor-pointer"
-              />
+              <div className="h-px bg-border/50" />
+
+              {/* Text Color */}
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <Label htmlFor="text-color" className="text-sm font-medium">Cor do Texto</Label>
+                  <p className="text-xs text-muted-foreground">Cor do texto do botão</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono text-muted-foreground uppercase">{textColor}</span>
+                  <div className="relative overflow-hidden rounded-full border border-border shadow-sm w-10 h-10 transition-transform active:scale-95">
+                    <Input
+                      id="text-color"
+                      type="color"
+                      value={textColor}
+                      onChange={(e) => handleTextChange(e.target.value)}
+                      className="absolute inset-0 w-[150%] h-[150%] -top-[25%] -left-[25%] p-0 border-none cursor-pointer opacity-0"
+                    />
+                    <div
+                      className="w-full h-full pointer-events-none"
+                      style={{ backgroundColor: textColor }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </TabsContent>
         </Tabs>

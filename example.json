@@ -30,7 +30,7 @@
       "createdAt": 1761171588000,
       "backgroundColor": "#ccd7a3",
       "buttonColor": "#ffffff",
-      "buttonStyle": "fill",
+      "button": "fill",
       "buttonCornerStyle": "roundedfull",
       "buttonShadowStyle": "shadowfull",
       "backgroundStyle": "grid",
@@ -59,26 +59,17 @@
           "noise": false,
           "__typename": "ColorBackground"
         },
-        "buttonStyle": {
+        "button": {
           "type": "FILL",
-          "backgroundStyle": {
-            "color": "#ffffff",
-            "__typename": "ButtonBackgroundStyle"
-          },
-          "shadowStyle": {
-            "type": "SHADOW_FULL",
+          "className": null,
+          "properties": {
+            "backgroundColor": "#ffffff",
             "color": "#000000",
-            "__typename": "ButtonShadowStyle"
+            "borderRadius": "999px",
+            "boxShadow": "0 12px 30px rgba(0,0,0,0.25)",
+            "border": "1px solid rgba(0,0,0,0.15)"
           },
-          "cornerStyle": {
-            "type": "ROUNDED_FULL",
-            "__typename": "ButtonCornerStyle"
-          },
-          "textStyle": {
-            "color": "#000000",
-            "__typename": "ButtonTextStyle"
-          },
-          "__typename": "ButtonStyle"
+          "__typename": "button"
         },
         "socialStyle": {
           "color": "#000000",

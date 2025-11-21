@@ -22,18 +22,16 @@ const RADIUS_PRESETS: RadiusPreset[] = [
 ]
 
 export default function CustomizeRadiusButton() {
-  const { theme, updateButtonStyle } = useAppearanceContext()
+  const { theme, updatebutton } = useAppearanceContext()
   const [borderRadius, setBorderRadius] = useState(
-    theme.buttonStyle?.shapeStyle?.properties?.borderRadius || '8px'
+    theme.button?.properties?.borderRadius?.toString() || '8px'
   )
 
   const handleRadiusChange = (value: string) => {
     setBorderRadius(value)
-    updateButtonStyle({
-      shapeStyle: {
-        properties: {
-          borderRadius: value,
-        },
+    updatebutton({
+      properties: {
+        borderRadius: value,
       },
     })
   }

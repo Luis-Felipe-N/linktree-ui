@@ -73,7 +73,14 @@ export default function Iphone15Pro({
         />
 
         {/* Camera */}
-
+        <path
+          d="M249 48.5C249 42.701 253.701 38 259.5 38C265.299 38 270 42.701 270 48.5C270 54.299 265.299 59 259.5 59C253.701 59 249 54.299 249 48.5Z"
+          className="fill-[#1a1a1a] dark:fill-[#0a0a0a]"
+        />
+        <path
+          d="M254 48.5C254 45.4624 256.462 43 259.5 43C262.538 43 265 45.4624 265 48.5C265 51.5376 262.538 54 259.5 54C256.462 54 254 51.5376 254 48.5Z"
+          className="fill-[#333333] dark:fill-[#1a1a1a]"
+        />
 
         {/* Clip path for content */}
         <defs>
@@ -98,22 +105,13 @@ export default function Iphone15Pro({
           left: '4.8%',
           right: '4.8%',
           bottom: '2.2%',
-          borderRadius: '2.37rem',
+          borderRadius: '3.77rem',
         }}
       >
         <div className="w-full h-full overflow-y-auto overflow-x-hidden scrollbar-hide">
           {children}
         </div>
       </div>
-
-      <path
-        d="M249 48.5C249 42.701 253.701 38 259.5 38C265.299 38 270 42.701 270 48.5C270 54.299 265.299 59 259.5 59C253.701 59 249 54.299 249 48.5Z"
-        className="fill-[#1a1a1a] dark:fill-[#0a0a0a]"
-      />
-      <path
-        d="M254 48.5C254 45.4624 256.462 43 259.5 43C262.538 43 265 45.4624 265 48.5C265 51.5376 262.538 54 259.5 54C256.462 54 254 51.5376 254 48.5Z"
-        className="fill-[#333333] dark:fill-[#1a1a1a]"
-      />
     </div >
   )
 }

@@ -31,10 +31,10 @@ export interface Page {
   updatedAt: ISODateString
 
   ownerId: string
-  owner?: User
+  owner: User
 
-  theme?: Theme | null
-  links?: Link[]
+  theme: Theme
+  links: Link[]
 }
 
 export interface Theme {
@@ -90,7 +90,7 @@ export interface Button {
 
   style: string
   className?: string | null
-  properties?: any | null // JSON - contém color, textColor, shadowStyle, cornerStyle, textStyle, backgroundStyle, shapeStyle
+  properties?: any | null
 
   themes?: Theme[]
 }
@@ -141,35 +141,10 @@ export interface AppearanceBackground {
   imageUrl?: string | null
 }
 
-export interface AppearanceButtonBackgroundStyle {
-  color?: string | null
-  properties?: CSSProperties | null
-}
-
-export interface AppearanceButtonShadowStyle {
+export interface AppearanceButton {
   type?: string | null
-  color?: string | null
-  properties?: CSSProperties | null
-}
-
-export interface AppearanceButtonCornerStyle {
-  type?: string | null
-  properties?: CSSProperties | null
-}
-
-export interface AppearanceButtonTextStyle {
-  color?: string | null
-  properties?: CSSProperties | null
-}
-
-export interface AppearanceButtonStyle {
-  type?: string | null
-  backgroundStyle?: AppearanceButtonBackgroundStyle | null
-  shadowStyle?: AppearanceButtonShadowStyle | null
-  cornerStyle?: AppearanceButtonCornerStyle | null
-  textStyle?: AppearanceButtonTextStyle | null
   className?: string | null
-  shapeStyle?: { properties?: CSSProperties | null } | null
+  properties?: CSSProperties | null
 }
 
 export interface AppearanceTypeface {
@@ -198,7 +173,7 @@ export interface AppearanceTheme {
   editable?: boolean | null
   luminance?: Luminance | null
   background?: AppearanceBackground | null
-  buttonStyle?: AppearanceButtonStyle | null
+  button?: AppearanceButton | null
   socialStyle?: { color?: string | null } | null
   typeface?: AppearanceTypeface | null
   heading?: AppearanceHeadingOptions | null

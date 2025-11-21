@@ -3,16 +3,16 @@ import { cn } from '@/lib/utils'
 import { useAppearanceContext } from '@/contexts/appearance'
 import { Button } from '@/components/ui/button'
 
-interface ButtonStyle {
+interface ShapeOption {
   type: string
   properties: React.CSSProperties
 }
 
 
 export function CustomizeShapeButton() {
-  const { updateButtonStyle } = useAppearanceContext()
+  const { updatebutton } = useAppearanceContext()
 
-  const shapeButtonStyles: ButtonStyle[] = [
+  const shapeButtons: ShapeOption[] = [
     {
       type: 'solid',
       properties: {
@@ -35,9 +35,11 @@ export function CustomizeShapeButton() {
     },
   ]
 
-  const handleStyleChange = (style: ButtonStyle) => {
-    console.log(`Button style changed to: ${style.type} with properties ${JSON.stringify(style.properties)}`)
-    updateButtonStyle({ shapeStyle: style })
+  const handleStyleChange = (style: ShapeOption) => {
+    updatebutton({
+      type: style.type,
+      properties: style.properties,
+    })
   }
 
   return (
@@ -53,7 +55,7 @@ export function CustomizeShapeButton() {
           <div>
             <h3 className="mb-2 font-medium">Style</h3>
             <div className='flex gap-4'>
-              {shapeButtonStyles.map((style) => (
+              {shapeButtons.map((style) => (
                 <Button
                   key={style.type}
                   onClick={() => handleStyleChange(style)}

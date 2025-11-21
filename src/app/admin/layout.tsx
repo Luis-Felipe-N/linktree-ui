@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/app-sidebar'
 import { ProtectedRoute } from '@/components/auth/protected-route'
+import AppearanceProvider from '@/contexts/appearance'
 
 export const metadata: Metadata = {
   title: '/my-links :: Admin',
@@ -14,12 +15,14 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <div className="w-full h-screen overflow-auto">
-        {/* <SidebarTrigger /> */}
-        {children}
-      </div>
-    </SidebarProvider>
+    <AppearanceProvider>
+      <SidebarProvider>
+        <AppSidebar />
+        <div className="w-full h-screen overflow-auto">
+          {/* <SidebarTrigger /> */}
+          {children}
+        </div>
+      </SidebarProvider>
+    </AppearanceProvider>
   )
 }

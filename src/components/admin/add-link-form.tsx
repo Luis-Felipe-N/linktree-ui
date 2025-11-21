@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useCreateLink } from '@/hooks/use-links'
-import { Loader2, Pen, Plus } from 'lucide-react'
+import { ChevronDown, ChevronUp, Loader2, Plus, Link as LinkIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Card, CardContent } from '../ui/card'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface AddLinkFormProps {
   pageId: string
@@ -41,6 +42,7 @@ export function AddLinkForm({ pageId, onSuccess }: AddLinkFormProps) {
     try {
       await createLink.mutateAsync(data)
       reset()
+      setShowAdvanced(false)
       onSuccess?.()
     } catch (error) {
       console.error('Error creating link:', error)
@@ -48,130 +50,159 @@ export function AddLinkForm({ pageId, onSuccess }: AddLinkFormProps) {
   }
 
   return (
-    <Card>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} >
-          {errors.url && (
-            <p className="text-sm text-red-500">{errors.url.message}</p>
-          )}
-          {errors.title && (
-            <p className="text-sm text-red-500">{errors.title.message}</p>
-          )}
-          <div className="space-y-2">
-            <div className='flex items-center'>
-              <input
-                className="border-none h-8 outline-none px-0 text-base placeholder:text-muted-foreground md:text-sm"
+    <Card className="bg-card border-dashed border-2 border-border/60 shadow-none hover:border-primary/50 transition-colors duration-200">
+      <CardContent className="p-4 sm:p-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="p-2 bg-primary/10 rounded-full text-primary">
+              <LinkIcon className="size-4" />
+            </div>
+            <h3 className="font-semibold text-sm">Adicionar novo link</h3>
+          </div>
+
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="url" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                URL <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="url"
+                type="url"
+                placeholder="https://exemplo.com"
+                {...register('url')}
+                className="h-10 bg-background"
+                aria-invalid={errors.url ? 'true' : 'false'}
+              />
+              {errors.url && (
+                <p className="text-xs text-destructive font-medium mt-1 animate-in slide-in-from-top-1">{errors.url.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="title" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Título
+              </Label>
+              <Input
                 id="title"
                 type="text"
                 placeholder="Título do link"
                 {...register('title')}
                 maxLength={100}
+                className="h-10 bg-background"
                 aria-invalid={errors.title ? 'true' : 'false'}
               />
-              <Pen className="h-4 w-4 text-muted-foreground" />
-            </div>
-
-          </div>
-          <div className="space-y-2">
-            <div className='flex items-center'>
-
-              <input
-                className="border-none h-8 outline-none px-0 text-base placeholder:text-muted-foreground md:text-sm"
-                id="url"
-                type="url"
-                placeholder="https://exemplo.com"
-                {...register('url')}
-                aria-invalid={errors.url ? 'true' : 'false'}
-              />
-              <Pen className="h-4 w-4 text-muted-foreground" />
+              {errors.title && (
+                <p className="text-xs text-destructive font-medium mt-1 animate-in slide-in-from-top-1">{errors.title.message}</p>
+              )}
             </div>
           </div>
 
+          <div className="pt-2">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="w-full justify-between h-9 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              aria-expanded={showAdvanced}
+            >
+              Opções avançadas
+              {showAdvanced ? (
+                <ChevronUp className="size-3.5" />
+              ) : (
+                <ChevronDown className="size-3.5" />
+              )}
+            </Button>
 
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className="text-xs"
-          >
-            {showAdvanced ? 'Ocultar' : 'Mostrar'} opções avançadas
-          </Button>
-
-          {showAdvanced && (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="type">Tipo</Label>
-                <Select
-                  value={linkType}
-                  onValueChange={(value) => setValue('type', value as 'link' | 'embed' | 'header')}
+            <AnimatePresence>
+              {showAdvanced && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="link">Link</SelectItem>
-                    <SelectItem value="embed">Embed</SelectItem>
-                    <SelectItem value="header">Header</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-4 mt-4 pt-2 border-t border-border/30">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="type" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Tipo</Label>
+                      <Select
+                        value={linkType}
+                        onValueChange={(value) => setValue('type', value as 'link' | 'embed' | 'header')}
+                      >
+                        <SelectTrigger className="h-9 text-sm">
+                          <SelectValue placeholder="Selecione o tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="link">Link</SelectItem>
+                          <SelectItem value="embed">Embed</SelectItem>
+                          <SelectItem value="header">Header</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="thumbnailUrl">URL da Miniatura</Label>
-                <Input
-                  id="thumbnailUrl"
-                  type="url"
-                  placeholder="https://exemplo.com/image.jpg"
-                  {...register('thumbnailUrl')}
-                  aria-invalid={errors.thumbnailUrl ? 'true' : 'false'}
-                />
-                {errors.thumbnailUrl && (
-                  <p className="text-sm text-red-500">{errors.thumbnailUrl.message}</p>
-                )}
-              </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="thumbnailUrl" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">URL da Miniatura</Label>
+                      <Input
+                        id="thumbnailUrl"
+                        type="url"
+                        placeholder="https://exemplo.com/image.jpg"
+                        {...register('thumbnailUrl')}
+                        className="h-9 text-sm"
+                      />
+                      {errors.thumbnailUrl && (
+                        <p className="text-xs text-destructive font-medium mt-1">{errors.thumbnailUrl.message}</p>
+                      )}
+                    </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="highlightEffect">Efeito de Destaque</Label>
-                <Input
-                  id="highlightEffect"
-                  type="text"
-                  placeholder="Ex: glow, pulse"
-                  {...register('highlightEffect')}
-                />
-              </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="highlightEffect" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Efeito de Destaque</Label>
+                      <Input
+                        id="highlightEffect"
+                        type="text"
+                        placeholder="Ex: glow, pulse"
+                        {...register('highlightEffect')}
+                        className="h-9 text-sm"
+                      />
+                    </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="scheduledStart">Início Agendado</Label>
-                  <Input
-                    id="scheduledStart"
-                    type="datetime-local"
-                    {...register('scheduledStart')}
-                  />
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="scheduledStart" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Início Agendado</Label>
+                        <Input
+                          id="scheduledStart"
+                          type="datetime-local"
+                          {...register('scheduledStart')}
+                          className="h-9 text-sm"
+                        />
+                      </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="scheduledEnd">Fim Agendado</Label>
-                  <Input
-                    id="scheduledEnd"
-                    type="datetime-local"
-                    {...register('scheduledEnd')}
-                  />
-                </div>
-              </div>
-            </>
-          )}
+                      <div className="space-y-1.5">
+                        <Label htmlFor="scheduledEnd" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Fim Agendado</Label>
+                        <Input
+                          id="scheduledEnd"
+                          type="datetime-local"
+                          {...register('scheduledEnd')}
+                          className="h-9 text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           <Button
             type="submit"
             disabled={isSubmitting || createLink.isPending}
-            className="w-full"
+            className="w-full h-10 font-medium transition-all active:scale-[0.98]"
           >
-            {(isSubmitting || createLink.isPending) && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {(isSubmitting || createLink.isPending) ? (
+              <Loader2 className="mr-2 size-4 animate-spin" />
+            ) : (
+              <Plus className="mr-2 size-4" />
             )}
-            <Plus className="mr-2 h-4 w-4" />
             Adicionar Link
           </Button>
         </form>

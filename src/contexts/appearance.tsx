@@ -9,13 +9,17 @@ type AppearanceContextValue = ReturnType<typeof useAppearance>
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined)
 
 export function AppearanceProvider({ children, initial }: { children: React.ReactNode; initial?: AppearanceTheme }) {
+  console.log('AppearanceProvider rendering', { initial })
   const value = useAppearance(initial)
   return <AppearanceContext.Provider value={value}>{children}</AppearanceContext.Provider>
 }
 
 export function useAppearanceContext() {
   const ctx = useContext(AppearanceContext)
-  if (!ctx) throw new Error('useAppearanceContext must be used within an AppearanceProvider')
+  if (!ctx) {
+    console.error('useAppearanceContext missing context')
+    throw new Error('useAppearanceContext must be used within an AppearanceProvider')
+  }
   return ctx
 }
 

@@ -34,24 +34,27 @@ export function AppSidebar() {
     },
   ] : []
   return (
-    <Sidebar className='p-4'>
-      <SidebarHeader>
+    <Sidebar className="border-r border-border/50 bg-sidebar transition-all duration-300 ease-in-out">
+      <SidebarHeader className="p-2 md:p-4">
         <PageSwitcher />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-2 md:px-4">
         <SidebarGroup>
-          <SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground/70 px-2 mb-2">
             /mylinks
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-1">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
+                    <Link
+                      href={item.url}
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none group"
+                    >
+                      <item.icon className="size-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                      <span className="font-medium text-sm">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

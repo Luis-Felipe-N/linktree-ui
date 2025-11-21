@@ -108,7 +108,7 @@ src/
 import { useAppearanceContext } from '@/contexts/appearance'
 
 function MyComponent() {
-  const { theme, loadPreset, updateBackground, updateButtonStyle } = useAppearanceContext()
+  const { theme, loadPreset, updateBackground, updatebutton } = useAppearanceContext()
 
   // Carregar um preset
   const handleLoadPreset = () => {
@@ -125,17 +125,13 @@ function MyComponent() {
 
   // Customizar botões
   const handleUpdateButton = () => {
-    updateButtonStyle({
-      backgroundStyle: { 
-        color: '#0000FF',
-        properties: { backgroundColor: '#0000FF' }
-      },
-      textStyle: {
+    updatebutton({
+      type: 'FILL',
+      properties: {
+        backgroundColor: '#0000FF',
         color: '#FFFFFF',
-        properties: { color: '#FFFFFF', fontWeight: '600' }
-      },
-      shapeStyle: {
-        properties: { borderRadius: '24px' }
+        fontWeight: 600,
+        borderRadius: '24px'
       }
     })
   }
@@ -143,11 +139,7 @@ function MyComponent() {
   return (
     <div style={theme.background.properties}>
       <h1 style={theme.typeface}>Meu Título</h1>
-      <button style={{
-        ...theme.buttonStyle.backgroundStyle?.properties,
-        ...theme.buttonStyle.textStyle?.properties,
-        ...theme.buttonStyle.shapeStyle?.properties
-      }}>
+      <button style={theme.button?.properties ?? undefined}>
         Meu Botão
       </button>
     </div>
@@ -168,24 +160,10 @@ type AppearanceTheme = {
     imageUrl?: string
     properties: React.CSSProperties
   }
-  buttonStyle: {
+  button: {
     type: 'FILL' | 'OUTLINE'
-    backgroundStyle: {
-      color: string
-      properties: React.CSSProperties
-    }
-    textStyle: {
-      color: string
-      properties: React.CSSProperties
-    }
-    shapeStyle: {
-      properties: React.CSSProperties
-    }
-    shadowStyle?: {
-      type: string
-      color: string
-      properties: React.CSSProperties
-    }
+    className?: string
+    properties: React.CSSProperties
   }
   typeface: {
     color: string

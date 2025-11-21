@@ -13,26 +13,24 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const hasError = !!errors
 
     const baseInputClasses = cn(
-      'transition px-4 h-14 w-full bg-zinc-100 text-zinc-200 rounded-xl focus-within:outline outline-offset-2 outline-2 outline-zinc-100',
+      'transition flex h-14 w-full rounded-xl border border-input bg-background px-4 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
       hasError && 'border-2 border-red-600',
       className,
     )
     const { children, ...rest } = props;
 
     return (
-      <div>
+      <div className="w-full">
         {showPrefix ? (
           <div className={baseInputClasses}>
-            <div className="flex items-center gap-1 h-full">
+            <div className="flex w-ful items-center gap-1 h-full">
               {props.children}
-              <div>
-                <input
-                  type={type}
-                  className="w-full h-full bg-transparent outline-0"
-                  ref={ref}
-                  {...rest}
-                />
-              </div>
+              <input
+                type={type}
+                className="w-full h-full bg-transparent outline-0"
+                ref={ref}
+                {...rest}
+              />
             </div>
           </div>
         ) : (

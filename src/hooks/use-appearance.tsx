@@ -42,12 +42,23 @@ export function useAppearance(initial?: AppearanceTheme) {
     })
   }, [])
 
-  const updateButtonStyle = useCallback((patch: Partial<AppearanceTheme['buttonStyle']>) => {
-    console.log('updateButtonStyle patch:', patch)
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      buttonStyle: { ...prevTheme.buttonStyle, ...patch }
-    }))
+  const updatebutton = useCallback((patch: Partial<AppearanceTheme['button']>) => {
+    console.log('updatebutton patch:', patch)
+    setTheme((prevTheme) => {
+      const nextButton = { ...prevTheme.button, ...patch }
+
+      if (patch.properties) {
+        nextButton.properties = {
+          ...prevTheme.button?.properties,
+          ...patch.properties,
+        }
+      }
+
+      return {
+        ...prevTheme,
+        button: nextButton,
+      }
+    })
   }, [])
 
   // const reset = useCallback(() => setTheme(defaultTheme), [defaultTheme])
@@ -69,7 +80,7 @@ export function useAppearance(initial?: AppearanceTheme) {
     setTheme,
     loadPreset,
     updateBackground,
-    updateButtonStyle,
+    updatebutton,
     // reset,
     // save,
     // clearLocal,

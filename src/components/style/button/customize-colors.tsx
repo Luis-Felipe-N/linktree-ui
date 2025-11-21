@@ -9,46 +9,40 @@ import { useState } from 'react'
 import THEME_PRESETS from '@/lib/theme-presets'
 
 export function CustomizeColorsButton() {
-  const { theme, updateButtonStyle, updateBackground } = useAppearanceContext()
+  const { theme, updatebutton, updateBackground } = useAppearanceContext()
 
   const [backgroundColor, setBackgroundColor] = useState(
-    theme?.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000'
+    theme?.button?.properties?.backgroundColor?.toString() ?? '#000000'
   )
   const [textColor, setTextColor] = useState(
-    theme?.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff'
+    theme?.button?.properties?.color?.toString() ?? '#ffffff'
   )
 
   const handlePresetChange = (preset: typeof THEME_PRESETS[number]) => {
     if (preset.theme.background) {
       updateBackground(preset.theme.background)
     }
-    if (preset.theme.buttonStyle) {
-      updateButtonStyle(preset.theme.buttonStyle)
+    if (preset.theme.button) {
+      updatebutton(preset.theme.button)
     }
-    setBackgroundColor(preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor?.toString() ?? '#000000')
-    setTextColor(preset.theme.buttonStyle?.textStyle?.properties?.color?.toString() ?? '#ffffff')
+    setBackgroundColor(preset.theme.button?.properties?.backgroundColor?.toString() ?? '#000000')
+    setTextColor(preset.theme.button?.properties?.color?.toString() ?? '#ffffff')
   }
 
   const handleBackgroundChange = (color: string) => {
     setBackgroundColor(color)
-    updateButtonStyle({
-      backgroundStyle: {
-        properties: { backgroundColor: color },
-      },
-      textStyle: {
-        properties: { color: theme.buttonStyle?.textStyle?.properties?.color ?? '#ffffff' },
+    updatebutton({
+      properties: {
+        backgroundColor: color,
       },
     })
   }
 
   const handleTextChange = (color: string) => {
     setTextColor(color)
-    updateButtonStyle({
-      textStyle: {
-        properties: { color: color },
-      },
-      backgroundStyle: {
-        properties: { backgroundColor: theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor ?? '#000000' },
+    updatebutton({
+      properties: {
+        color,
       },
     })
   }
@@ -80,7 +74,7 @@ export function CustomizeColorsButton() {
                   />
 
                   {/* Content */}
-                  <div className="relative z-10" style={{ color: preset.theme.buttonStyle?.textStyle?.properties?.color }}>
+                  <div className="relative z-10" style={{ color: preset.theme.button?.properties?.color }}>
                     <div className="font-semibold text-sm mb-1">{preset.title}</div>
 
                     {/* Button Preview */}
@@ -88,11 +82,11 @@ export function CustomizeColorsButton() {
                       <span
                         className="inline-block px-3 py-1.5 text-xs font-medium rounded"
                         style={{
-                          backgroundColor: preset.theme.buttonStyle?.backgroundStyle?.properties?.backgroundColor,
-                          color: preset.theme.buttonStyle?.textStyle?.properties?.color,
-                          border: preset.theme.buttonStyle?.shapeStyle?.properties?.border as string,
-                          boxShadow: preset.theme.buttonStyle?.shadowStyle?.properties?.boxShadow as string,
-                          borderRadius: preset.theme.buttonStyle?.shapeStyle?.properties?.borderRadius as string,
+                          backgroundColor: preset.theme.button?.properties?.backgroundColor,
+                          color: preset.theme.button?.properties?.color,
+                          border: preset.theme.button?.properties?.border as string,
+                          boxShadow: preset.theme.button?.properties?.boxShadow as string,
+                          borderRadius: preset.theme.button?.properties?.borderRadius as string,
                         }}
                       >
                         Preview

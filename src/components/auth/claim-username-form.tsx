@@ -1,11 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Loader2, Check, X } from 'lucide-react'
-import { Input } from '../form/input'
+import { Loader2, Check, X, ArrowRight } from 'lucide-react'
+
+import { Button } from '../ui/button'
 import { api } from '@/lib/api'
 import { cn } from '@/lib/utils'
 import { useState, useRef, useCallback } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Input } from '../form/input'
 
 interface ClaimUsernameFormProps {
   redirectTo: string
@@ -63,44 +66,78 @@ export function ClaimUsernameForm({ redirectTo }: ClaimUsernameFormProps) {
   const inputBorderClass = usernameIsValid === null
     ? ''
     : usernameIsValid
-      ? 'border-green-300 focus-within:outline-green-500'
-      : 'border-red-500 focus-within:outline-red-500'
+      ? ' border-2 border-green-500/50 focus-within:border-green-500 focus-within:ring-green-500/20'
+      : ' border-2 border-red-500/50 focus-within:border-red-500 focus-within:ring-red-500/20'
 
   const isFormValid = username.trim() && usernameIsValid === true
 
   return (
-    <form onSubmit={handleClaimUsername} className="flex gap-2">
-      <Input
-        name="username"
-        placeholder="nomedapagina"
-        className={cn('flex-1 text-slate-700', inputBorderClass)}
-        showPrefix={true}
-        autoComplete="username"
-        value={username}
-        onChange={(e) => handleSearch(e.target.value)}
-      >
+    <form onSubmit={handleClaimUsername} className="flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto">
+      <div className="relative flex-1 group">
+        <Input
+          showPrefix
+          name="username"
+          placeholder="seu-usuario"
+          className={cn(
+            'h-14 ',
+            inputBorderClass
+          )}
+          autoComplete="username"
+          value={username}
+          onChange={(e) => handleSearch(e.target.value)}
+        >
+          <span className="text-muted-foreground font-medium">linktree.com/</span>
+        </Input>
 
-        <div className="flex items-center justify-center w-5">
-          {isChecking ? (
-            <Loader2 className="animate-spin text-zinc-500" size={16} />
-          ) : usernameIsValid === true ? (
-            <Check className="text-green-500" size={16} />
-          ) : usernameIsValid === false ? (
-            <X className="text-red-500" size={16} />
-          ) : null}
+        {/* Status Indicator */}
+        <div className="absolute right-4 top-0 h-full flex items-center justify-center w-5">
+          <AnimatePresence mode="wait">
+            {isChecking ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+              >
+                <Loader2 className="animate-spin text-muted-foreground" size={18} />
+              </motion.div>
+            ) : usernameIsValid === true ? (
+              <motion.div
+                key="valid"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+              >
+                <Check className="text-green-500" size={18} />
+              </motion.div>
+            ) : usernameIsValid === false ? (
+              <motion.div
+                key="invalid"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+              >
+                <X className="text-red-500" size={18} />
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </div>
+      </div>
 
-        {/* Prefixo do domínio */}
-        <span className="whitespace-nowrap text-zinc-500">mylinks.com/</span>
-      </Input>
-
-      <button
-        className="flex items-center text-white justify-center gap-2 px-16 h-14 rounded-xl font-bold bg-slate-500 hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      <Button
+        className={cn(
+          "h-14 px-8 text-base font-semibold transition-all duration-300 shadow-sm",
+          isFormValid
+            ? "bg-primary hover:bg-primary/90 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+            : "opacity-80"
+        )}
         type="submit"
         disabled={!isFormValid || isChecking}
+        size="lg"
       >
-        Reservar
-      </button>
+        <span className="mr-2">Reservar</span>
+        <ArrowRight className={cn("size-4 transition-transform duration-300", isFormValid && "group-hover:translate-x-1")} />
+      </Button>
     </form>
   )
 }

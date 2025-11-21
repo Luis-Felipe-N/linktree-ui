@@ -25,8 +25,7 @@ export function usePage(pageSlug: string | null) {
 
       try {
         const response = await api.get(`/pages/${pageSlug}`)
-        useAppearance(response.data.theme)
-        return response.data
+        return response.data.page as Page
       } catch (error) {
         console.error('Failed to fetch page:', error)
         throw error

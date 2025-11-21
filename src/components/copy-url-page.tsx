@@ -77,7 +77,7 @@ export function CopyUrlPage({ slug }: CopyUrlPageProps) {
             }}
           >
             <Button
-              className='font-semibold bg-slate-500 hover:bg-slate-600 rounded-xl px-4 text-white w-full transition-all duration-200'
+              className='font-semibold bg-primary hover:bg-primary/90 rounded-xl px-4 text-primary-foreground w-full transition-all duration-200'
               onClick={handleCopy}
               disabled={copied}
             >

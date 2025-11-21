@@ -26,15 +26,18 @@ export const THEME_PRESETS: ThemePreset[] = [
         color: '#010101',
         style: 'PLAIN',
         type: 'COLOR',
-        properties: { backgroundColor: '#010101' },
+        properties: { backgroundColor: '#010101', color: '#FFFFFF' },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        cornerStyle: { type: 'ROUNDED' },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#000000', properties: { boxShadow: '0 4px 16px rgba(0,0,0,0.2)' } },
-        backgroundStyle: { color: '#FFFFFF1A', properties: { backgroundColor: '#FFFFFF1A' } },
-        textStyle: { color: '#FFFFFF', properties: { color: '#FFFFFF', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none', borderRadius: '24px' } },
+        properties: {
+          backgroundColor: '#FFFFFF1A',
+          color: '#FFFFFF',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
+        },
       },
       socialStyle: { color: '#FFFFFF' },
       typeface: { color: '#FFFFFF', family: 'system' },
@@ -54,15 +57,18 @@ export const THEME_PRESETS: ThemePreset[] = [
         type: 'COLOR',
         color: '#110054',
         style: 'PLAIN',
-        properties: { backgroundColor: '#110054' },
+        properties: { backgroundColor: '#110054', color: '#fff' },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#FFFFFF33', properties: { backgroundColor: '#FFFFFF33' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#A884F3', properties: { boxShadow: '0 4px 16px rgba(168,132,243,0.4)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#A884F3', properties: { color: '#A884F3', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#FFFFFF33',
+          color: '#A884F3',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(168,132,243,0.4)'
+        },
       },
       socialStyle: { color: '#A884F3' },
       typeface: { color: '#A884F3', family: 'system' },
@@ -82,15 +88,18 @@ export const THEME_PRESETS: ThemePreset[] = [
         type: 'COLOR',
         color: '#373E24',
         style: 'PLAIN',
-        properties: { backgroundColor: '#373E24' },
+        properties: { backgroundColor: '#373E24', color: '#E3DFF3' },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#00000033', properties: { backgroundColor: '#00000033' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#000000', properties: { boxShadow: '0 4px 16px rgba(0,0,0,0.2)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#E3DFF3', properties: { color: '#E3DFF3', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#00000033',
+          color: '#E3DFF3',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
+        },
       },
       socialStyle: { color: '#E3DFF3' },
       typeface: { color: '#E3DFF3', family: 'system' },
@@ -110,15 +119,18 @@ export const THEME_PRESETS: ThemePreset[] = [
         type: 'COLOR',
         color: '#080221',
         style: 'PLAIN',
-        properties: { backgroundColor: '#080221' },
+        properties: { backgroundColor: '#080221', color: '#79FBF7', },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#9992CC26', properties: { backgroundColor: '#9992CC26' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#79FBF7', properties: { boxShadow: '0 4px 16px rgba(121,251,247,0.3)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#79FBF7', properties: { color: '#79FBF7', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#9992CC26',
+          color: '#79FBF7',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(121,251,247,0.3)'
+        },
       },
       socialStyle: { color: '#79FBF7' },
       typeface: { color: '#79FBF7', family: 'system' },
@@ -144,16 +156,20 @@ export const THEME_PRESETS: ThemePreset[] = [
           backgroundImage: 'url(https://media.bio.site/public/library/image-bg-catalog/fresh3.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundColor: '#5286af'
+          backgroundColor: '#5286af',
+          color: '#fff'
         },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#FFFFFF33', properties: { backgroundColor: '#FFFFFF33' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#000000', properties: { boxShadow: '0 4px 16px rgba(0,0,0,0.15)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#FDFFB0', properties: { color: '#FDFFB0', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#FFFFFF33',
+          color: '#FDFFB0',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
+        },
       },
       socialStyle: { color: '#FDFFB0' },
       typeface: { color: '#FDFFB0', family: 'system' },
@@ -182,13 +198,16 @@ export const THEME_PRESETS: ThemePreset[] = [
           backgroundColor: '#db9b97'
         },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#0000004D', properties: { backgroundColor: '#0000004D' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#db9b97', properties: { boxShadow: '0 4px 16px rgba(219,155,151,0.3)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#F4DDC8', properties: { color: '#F4DDC8', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#0000004D',
+          color: '#F4DDC8',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(219,155,151,0.3)'
+        },
       },
       socialStyle: { color: '#F4DDC8' },
       typeface: { color: '#F4DDC8', family: 'system' },
@@ -217,13 +236,16 @@ export const THEME_PRESETS: ThemePreset[] = [
           backgroundColor: '#ce7875'
         },
       },
-      buttonStyle: {
+      button: {
         type: 'FILL',
-        backgroundStyle: { color: '#FFE9AE33', properties: { backgroundColor: '#FFE9AE33' } },
-        shadowStyle: { type: 'SHADOW_MEDIUM', color: '#ce7875', properties: { boxShadow: '0 4px 16px rgba(206,120,117,0.3)' } },
-        cornerStyle: { type: 'ROUNDED', properties: { borderRadius: '24px' } },
-        textStyle: { color: '#FFE9AE', properties: { color: '#FFE9AE', fontWeight: '600' } },
-        shapeStyle: { properties: { border: 'none' } },
+        properties: {
+          backgroundColor: '#FFE9AE33',
+          color: '#FFE9AE',
+          fontWeight: '600',
+          border: 'none',
+          borderRadius: '24px',
+          boxShadow: '0 4px 16px rgba(206,120,117,0.3)'
+        },
       },
       socialStyle: { color: '#FFE9AE' },
       typeface: { color: '#FFE9AE', family: 'system' },
