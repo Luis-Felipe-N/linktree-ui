@@ -10,24 +10,6 @@ export function useAppearance(initial?: AppearanceTheme) {
   const defaultTheme = initial ?? THEME_PRESETS?.[0]?.theme ?? ({} as AppearanceTheme)
   const [theme, setTheme] = useState<AppearanceTheme>(defaultTheme)
 
-  // useEffect(() => {
-  //   try {
-  //     const raw = localStorage.getItem(STORAGE_KEY)
-  //     if (raw) {
-  //       const parsed = JSON.parse(raw) as AppearanceTheme
-  //       setTheme(parsed)
-  //     }
-  //   } catch (e) {
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   try {
-  //     localStorage.setItem(STORAGE_KEY, JSON.stringify(theme))
-  //   } catch (e) {
-  //   }
-  // }, [theme])
-
   const loadPreset = useCallback((key: string) => {
     const p = getPreset(key)
     if (p?.theme) setTheme(p.theme)
@@ -47,7 +29,7 @@ export function useAppearance(initial?: AppearanceTheme) {
     setTheme((prevTheme) => {
       const nextButton = { ...prevTheme.button, ...patch }
 
-      if (patch.properties) {
+      if (patch?.properties) {
         nextButton.properties = {
           ...prevTheme.button?.properties,
           ...patch.properties,

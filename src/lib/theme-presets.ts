@@ -167,7 +167,7 @@ export const THEME_PRESETS: ThemePreset[] = [
           color: '#FDFFB0',
           fontWeight: '600',
           border: 'none',
-          borderRadius: '24px',
+          borderRadius: '12px',
           boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
         },
       },

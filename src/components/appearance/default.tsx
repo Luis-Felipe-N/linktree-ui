@@ -13,7 +13,7 @@ interface TemplateProps {
 }
 
 export default function TemplateDefault({ links, page }: TemplateProps) {
-  const theme = page?.theme || useAppearanceContext().theme
+  const theme = page?.theme
 
   console.log('Rendering TemplateDefault with theme:', theme)
 
