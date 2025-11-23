@@ -11,7 +11,7 @@ interface CopyUrlPageProps {
 export function CopyUrlPage({ slug }: CopyUrlPageProps) {
   const [hovered, setHovered] = useState(false)
   const [copied, setCopied] = useState(false)
-  const userProfileUrl = slug ? `https://mylinks.com/${slug}` : ''
+  const userProfileUrl = slug ? `https://biosite.vercel/${slug}` : ''
 
   const handleCopy = () => {
     navigator.clipboard.writeText(userProfileUrl)

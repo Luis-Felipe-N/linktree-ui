@@ -18,8 +18,8 @@ const satoshi = localFont({
 })
 
 export const metadata: Metadata = {
-  title: '/mylinks',
-  description: 'Um link para agregar todos os seus links importantes.',
+  title: 'biosite',
+  description: 'Centralize seus links com o biosite.',
 }
 
 export default function RootLayout({

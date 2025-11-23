@@ -78,7 +78,7 @@ export function PageSwitcher() {
                   {activePage?.title || "Selecione uma página"}
                 </span>
                 <span className="truncate text-xs text-muted-foreground">
-                  {activePage?.slug ? `mylink.com/${activePage.slug}` : "Nenhuma página selecionada"}
+                  {activePage?.slug ? `biosite.vercel/${activePage.slug}` : "Nenhuma página selecionada"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50 group-hover/button:opacity-100 transition-opacity group-data-[state=collapsed]:hidden" />

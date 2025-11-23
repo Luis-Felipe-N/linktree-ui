@@ -41,7 +41,7 @@ export function AppSidebar() {
       <SidebarContent className="px-2 md:px-4">
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-medium text-muted-foreground/70 px-2 mb-2">
-            /mylinks
+            biosite.vercel
           </SidebarGroupLabel>
 
           <SidebarGroupContent>

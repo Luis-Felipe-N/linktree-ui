@@ -57,7 +57,7 @@ export default function Login() {
         animate={{ opacity: 1, y: 0 }}
         className="absolute top-8 left-8"
       >
-        <strong className="text-xl font-bold tracking-tight">/my-links</strong>
+        <strong className="text-xl font-bold tracking-tight">biosite</strong>
       </motion.div>
 
       <motion.div
@@ -68,7 +68,7 @@ export default function Login() {
       >
         <div className="text-center space-y-2">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Bem vindo de volta</h1>
-          <p className="text-muted-foreground">Faça login no /my-links para continuar</p>
+          <p className="text-muted-foreground">Faça login no biosite para continuar</p>
         </div>
 
         <form

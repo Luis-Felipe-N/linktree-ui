@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-  title: '/my-links - Autenticação',
-  description: 'Faça login ou crie sua conta no /my-links',
+  title: 'biosite - Autenticação',
+  description: 'Faça login ou crie sua conta no biosite',
 }
 
 export default function AuthLayout({

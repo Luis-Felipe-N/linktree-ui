@@ -121,7 +121,7 @@ function RegisterForm() {
         animate={{ opacity: 1, y: 0 }}
         className="absolute top-8 left-8"
       >
-        <strong className="text-xl font-bold tracking-tight">/my-links</strong>
+        <strong className="text-xl font-bold tracking-tight">biosite</strong>
       </motion.div>
 
       <motion.div
@@ -131,7 +131,7 @@ function RegisterForm() {
         className="w-full max-w-md space-y-8"
       >
         <div className="text-center space-y-2">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Junte-se ao /my-links</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Junte-se ao biosite</h1>
           <p className="text-muted-foreground">Cadastre-se gratuitamente e comece a compartilhar</p>
         </div>
 
@@ -171,7 +171,7 @@ function RegisterForm() {
                   {...register('username')}
                   autoComplete="username"
                 >
-                  <span className="text-muted-foreground text-sm font-medium">mylinks.com/</span>
+                  <span className="text-muted-foreground text-sm font-medium">biosite.vercel/</span>
 
                 </InputWithPrefix>
               </div>

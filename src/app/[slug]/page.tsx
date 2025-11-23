@@ -95,7 +95,7 @@ export default function PublicPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
-        <p className='text-[10px] font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity'>Criado por <Link href="https://biosites.vercel.app/">biosites</Link></p>
+        <p className='text-[10px] font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity'>Criado por <Link href="https://biosite.vercel/">biosite</Link></p>
       </motion.div>
     </div >
   )

@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import type { Page } from '@/lib/types'
+import { usePages } from '@/hooks/use-pages'
 
 interface ActivePageContextValue {
   activePage: Page | null
@@ -16,15 +17,16 @@ interface ActivePageProviderProps {
 
 export function ActivePageProvider({ children }: ActivePageProviderProps) {
   const [activePage, setActivePageState] = useState<Page | null>(null)
+  const { data: pages } = usePages()
 
-  const setActivePage = (page: Page | null) => {
+  const setActivePage = useCallback((page: Page | null) => {
     setActivePageState(page)
     if (page) {
       localStorage.setItem('activePage', JSON.stringify(page))
     } else {
       localStorage.removeItem('activePage')
     }
-  }
+  }, [])
 
   useEffect(() => {
     const savedPage = localStorage.getItem('activePage')
@@ -36,6 +38,20 @@ export function ActivePageProvider({ children }: ActivePageProviderProps) {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (!pages || pages.length === 0) return
+
+    if (!activePage) {
+      setActivePage(pages[0])
+      return
+    }
+
+    const stillExists = pages.some((page) => page.id === activePage.id)
+    if (!stillExists) {
+      setActivePage(pages[0])
+    }
+  }, [pages, activePage, setActivePage])
 
   return (
     <ActivePageContext.Provider value={{ activePage, setActivePage }}>

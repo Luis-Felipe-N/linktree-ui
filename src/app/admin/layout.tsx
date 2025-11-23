@@ -5,8 +5,8 @@ import { ProtectedRoute } from '@/components/auth/protected-route'
 import AppearanceProvider from '@/contexts/appearance'
 
 export const metadata: Metadata = {
-  title: '/my-links :: Admin',
-  description: 'Painel administrativo do /my-links',
+  title: 'biosite :: Admin',
+  description: 'Painel administrativo do biosite',
 }
 
 export default function AdminLayout({

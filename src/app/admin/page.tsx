@@ -103,7 +103,7 @@ export default function Admin() {
                       autoComplete="username"
                       value={page.slug}
                     >
-                      <span className="whitespace-nowrap text-zinc-500">mylinks.com/</span>
+                      <span className="whitespace-nowrap text-zinc-500">biosite.vercel/</span>
                     </Input>
                     <Button
                       size="sm"
