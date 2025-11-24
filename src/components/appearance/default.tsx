@@ -1,7 +1,7 @@
 "use client"
 
 import { useAppearanceContext } from '@/contexts/appearance'
-import type { Link as LinkType, Page } from '@/lib/types'
+import type { Link as LinkType, Page, AppearanceTheme } from '@/lib/types'
 import Link from 'next/link'
 import Iphone15Pro from '../iphone-15'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -13,7 +13,8 @@ interface TemplateProps {
 }
 
 export default function TemplateDefault({ links, page }: TemplateProps) {
-  const theme = page?.theme
+  const { theme: appearanceTheme } = useAppearanceContext()
+  const theme = (page?.theme as AppearanceTheme | undefined) ?? appearanceTheme
 
   console.log('Rendering TemplateDefault with theme:', theme)
 
@@ -38,7 +39,7 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
         <Iphone15Pro>
           <div
             className="w-full h-full flex flex-col items-center justify-start py-12 px-6 overflow-y-auto scrollbar-hide"
-            style={theme.background?.properties}
+            style={theme?.background?.properties ?? undefined}
           >
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -73,7 +74,7 @@ export default function TemplateDefault({ links, page }: TemplateProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center px-6 py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg"
-                    style={theme.button?.properties}
+                    style={theme?.button?.properties ?? undefined}
                   >
                     <span className="font-semibold text-sm sm:text-base truncate max-w-full">{link.title}</span>
                   </Link>
