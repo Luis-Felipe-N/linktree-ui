@@ -1,7 +1,7 @@
 'use client'
 
 import { BackgroundGrid } from '@/components/background-grid'
-import { SharePageDialog } from '@/components/share-page-dialog'
+import { SharePageDialog } from '@/components/pages/share-page-dialog'
 import { usePageContext } from '@/contexts/page'
 import { useLinks } from '@/hooks/use-links'
 import { AppearanceProvider } from '@/contexts/appearance'

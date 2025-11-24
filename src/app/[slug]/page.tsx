@@ -2,10 +2,9 @@
 
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { api } from '@/lib/api'
-import { Loader2, ExternalLink } from 'lucide-react'
+import { publicApi } from '@/lib/api'
+import { Loader2 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { usePage } from '@/hooks/use-pages'
 import type { Link as LinkType } from '@/lib/types'
@@ -39,7 +38,7 @@ export default function PublicPage() {
 
 
   const handleLinkClick = (link: LinkType) => {
-    api.post(`/links/${link.id}/click`).catch(() => { })
+    publicApi.post(`/links/${link.id}/click`).catch(() => { })
     window.open(link.url, '_blank', 'noopener,noreferrer')
   }
   console.log(page)

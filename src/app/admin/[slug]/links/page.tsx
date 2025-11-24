@@ -7,7 +7,7 @@ import { AddLinkForm } from '@/components/admin/add-link-form'
 import { EditLinkItem } from '@/components/admin/edit-link-item'
 import { useLinks } from '@/hooks/use-links'
 import { CopyUrlPage } from '@/components/copy-url-page'
-import { SharePageDialog } from '@/components/share-page-dialog'
+import { SharePageDialog } from '@/components/pages/share-page-dialog'
 import { BackgroundGrid } from '@/components/background-grid'
 import TemplateDefault from '@/components/appearance/default'
 

@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/sidebar'
 
 import { useActivePage } from '@/contexts/active-page'
-import { PageSwitcher } from './page-switcher'
+import { PageSwitcher } from './pages/page-switcher'
 
 export function AppSidebar() {
   const { activePage } = useActivePage()
