@@ -3,9 +3,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { Page, AppearanceTheme } from '@/lib/types'
-import useAppearance from './use-appearance'
 
-export function usePages() {
+interface UsePagesOptions {
+  enabled?: boolean
+}
+
+export function usePages(options?: UsePagesOptions) {
   return useQuery({
     queryKey: ['pages'],
     queryFn: async () => {
@@ -14,6 +17,7 @@ export function usePages() {
 
       return pages
     },
+    enabled: options?.enabled ?? true,
   })
 }
 
@@ -25,7 +29,7 @@ export function usePage(pageSlug: string | null) {
 
       try {
         const response = await api.get(`/pages/${pageSlug}`)
-        return response.data
+        return response.data.page as Page
       } catch (error) {
         console.error('Failed to fetch page:', error)
         throw error

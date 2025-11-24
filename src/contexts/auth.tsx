@@ -8,8 +8,10 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
+import { usePathname } from 'next/navigation'
 
 export interface User {
   id: string
@@ -45,6 +47,18 @@ const TOKEN_EXPIRY_DAYS = 7
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const pathname = usePathname()
+
+  const firstSegment = useMemo(() => {
+    const segments = pathname?.split('/').filter(Boolean) ?? []
+    return segments[0] ?? ''
+  }, [pathname])
+
+  const isPublicProfile = useMemo(() => {
+    if (!firstSegment) return false
+    const reserved = new Set(['admin', 'login', 'register', 'pages', 'api'])
+    return !reserved.has(firstSegment)
+  }, [firstSegment])
 
   const logout = useCallback(() => {
     Cookies.remove(TOKEN_KEY)
@@ -53,6 +67,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   useEffect(() => {
+    if (isPublicProfile) {
+      setIsLoading(false)
+      return
+    }
+
     async function loadUserFromCookies() {
       const token = Cookies.get(TOKEN_KEY)
       if (!token) {
@@ -73,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     loadUserFromCookies()
-  }, [logout])
+  }, [logout, isPublicProfile])
 
   const login = useCallback(async (credentials: LoginCredentials) => {
     try {

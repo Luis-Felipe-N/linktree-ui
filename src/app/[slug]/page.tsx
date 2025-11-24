@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { publicApi } from '@/lib/api'
+import { api } from '@/lib/api'
 import { Loader2 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
@@ -36,12 +36,13 @@ export default function PublicPage() {
     }
   }
 
-
   const handleLinkClick = (link: LinkType) => {
-    publicApi.post(`/links/${link.id}/click`).catch(() => { })
+    api.post(`/links/${link.id}/click`).catch(() => { })
     window.open(link.url, '_blank', 'noopener,noreferrer')
   }
+
   console.log(page)
+
   return (
     <div
       className="min-h-screen py-12 px-4 w-full flex flex-col items-center"
@@ -73,7 +74,7 @@ export default function PublicPage() {
         animate="visible"
         className="max-w-2xl w-full space-y-4 flex-1"
       >
-        {page.links.map((link) => (
+        {page.links && page.links.map((link) => (
           <motion.div key={link.id} variants={itemVariants}>
             <Link
               href={link.url}

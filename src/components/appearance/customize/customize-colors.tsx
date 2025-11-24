@@ -152,8 +152,10 @@ export function CustomizeColorsButton() {
                   className="group relative overflow-hidden rounded-xl border border-border/50 hover:border-primary/50 hover:shadow-md transition-all duration-200 aspect-[4/3] flex flex-col items-center justify-center"
                 >
                   <div className="p-4 gap-2 w-full h-full flex flex-col items-center justify-center" style={preset.theme.background?.properties || {}}>
-                    <span className="font-medium text-sm mb-2 drop-shadow-md mix-blend-difference text-white">{preset.title}</span>
-                    <div className="w-16 h-6 rounded shadow-sm" style={preset.theme.button?.properties || {}} />
+                    <span className="font-medium text-sm mb-2 drop-shadow-md">{preset.title}</span>
+                    <div className="w-16 h-6 rounded shadow-sm" style={preset.theme.button?.properties || {}}>
+                      <small>Texto</small>
+                    </div>
                   </div>
                 </button>
               ))}

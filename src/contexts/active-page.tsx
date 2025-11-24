@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import type { Page } from '@/lib/types'
 import { usePages } from '@/hooks/use-pages'
 
@@ -17,7 +18,9 @@ interface ActivePageProviderProps {
 
 export function ActivePageProvider({ children }: ActivePageProviderProps) {
   const [activePage, setActivePageState] = useState<Page | null>(null)
-  const { data: pages } = usePages()
+  const pathname = usePathname()
+  const isAdminRoute = pathname?.startsWith('/admin') ?? false
+  const { data: pages } = usePages({ enabled: isAdminRoute })
 
   const setActivePage = useCallback((page: Page | null) => {
     setActivePageState(page)
@@ -40,7 +43,7 @@ export function ActivePageProvider({ children }: ActivePageProviderProps) {
   }, [])
 
   useEffect(() => {
-    if (!pages || pages.length === 0) return
+    if (!isAdminRoute || !pages || pages.length === 0) return
 
     if (!activePage) {
       setActivePage(pages[0])
@@ -51,7 +54,7 @@ export function ActivePageProvider({ children }: ActivePageProviderProps) {
     if (!stillExists) {
       setActivePage(pages[0])
     }
-  }, [pages, activePage, setActivePage])
+  }, [pages, activePage, setActivePage, isAdminRoute])
 
   return (
     <ActivePageContext.Provider value={{ activePage, setActivePage }}>
