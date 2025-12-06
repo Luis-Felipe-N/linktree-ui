@@ -51,8 +51,12 @@ export function ActivePageProvider({ children }: ActivePageProviderProps) {
     }
 
     const stillExists = pages.some((page) => page.id === activePage.id)
+
+    console.log('ActivePageProvider useEffect check', { activePage, pages, stillExists })
     if (!stillExists) {
       setActivePage(pages[0])
+    } else {
+      setActivePage(pages.find((page) => page.id === activePage.id) || null)
     }
   }, [pages, activePage, setActivePage, isAdminRoute])
 

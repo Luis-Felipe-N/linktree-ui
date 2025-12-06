@@ -8,7 +8,7 @@ import { useActivePage } from '@/contexts/active-page'
 import { useUpdatePageTheme } from '@/hooks/use-pages'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Save, Loader2 } from 'lucide-react'
 import THEME_PRESETS from '@/lib/theme-presets'
 import z from 'zod'
@@ -69,12 +69,10 @@ export function CustomizeColorsButton() {
     },
   })
 
-  // Monitora os valores em tempo real
   const formValues = watch()
 
-  // Atualiza o contexto visual (preview) quando o form muda
   const handleColorChange = (field: keyof CustomizeColorsSchema, value: string) => {
-    setValue(field, value) // Atualiza o form state
+    setValue(field, value)
 
     const newValues = { ...formValues, [field]: value }
 

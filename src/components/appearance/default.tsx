@@ -14,6 +14,7 @@ interface TemplateProps {
 
 export default function TemplateDefault({ links, page }: TemplateProps) {
   const { theme: appearanceTheme } = useAppearanceContext()
+  console.log('TemplateDefault received page:', page)
   const theme = (page?.theme as AppearanceTheme | undefined) ?? appearanceTheme
 
   console.log('Rendering TemplateDefault with theme:', theme)
