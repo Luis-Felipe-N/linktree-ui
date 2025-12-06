@@ -1,202 +1,111 @@
-# Linktree UI
+# biosite
 
 <div align="center">
-  
-  ![Linktree UI Cover](https://raw.githubusercontent.com/Luis-Felipe-N/linktree-ui/main/public/cover.png)
-  
-  ### 🎨 Aplicação de gerenciamento de links estilo Linktree
-  **Customização de temas em tempo real com 9+ presets profissionais**
-  
-  [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-  [![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
-  
+
+![biosite cover](public/cover.png)
+
+**Seu microsite multi-link com cara de produto premium.**
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![React Query](https://img.shields.io/badge/React_Query-5-FF4154?style=flat-square&logo=react-query)](https://tanstack.com/query)
+
 </div>
 
----
+## Visão rápida
 
+biosite centraliza todos os seus links em um microsite responsive, com editor em tempo real e presets que já nascem prontos para conversão. A proposta é ser simples de operar, mas flexível o bastante para times que trabalham com branding, afiliados ou influenciadores.
 
-## ✨ Features
+## O que vem pronto
 
-- 🎨 **9+ Temas Profissionais** - New York, Buenos Aires, Kyoto, Vancouver, São Paulo, Copenhagen, Lisbon, Melbourne, Capetown
-- 🎭 **Customização em Tempo Real** - Cores, formas, bordas, sombras
-- 🖼️ **Suporte a Imagens de Fundo** - Backgrounds personalizados com imagens
-- 📱 **Preview Ao Vivo** - Visualize mudanças instantaneamente
-- 🌈 **Contraste Otimizado** - Todas as combinações garantem legibilidade
-- 💾 **Persistência Local** - Seus temas salvos automaticamente
+- Editor visual com preview dentro de um mock do iPhone 15.
+- Biblioteca de presets (Nova York, Buenos Aires, Kyoto, etc.) + customização fina de cores, botões e sombras.
+- Providers para aparência, autenticação e páginas ativas, reduzindo acoplamento.
+- Métricas de clique via API pública sem depender de sessão.
+- Deploy pronto para Vercel (`https://biosite.vercel.app/<slug>`).
 
-## 🛠️ Stack Tecnológico
+## Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Linguagem**: TypeScript
-- **Estilização**: Tailwind CSS + CSS-in-JS
-- **Componentes**: Radix UI + shadcn/ui
-- **Banco de Dados**: Prisma
-- **Estado Global**: React Context API
+| Camada | Tecnologia |
+| --- | --- |
+| Interface | Next.js 15 (App Router) + TypeScript 5 |
+| UI kit | Tailwind CSS + shadcn/ui |
+| Estado remoto | TanStack Query + axios clients (`api` e `publicApi`) |
+| Persistência | Prisma ORM + Postgres |
+| Motion | Framer Motion |
 
-## 🚀 Começando
-
-### Pré-requisitos
-
-- Node.js 18+
-- npm ou yarn
-
-### Instalação
+## Primeiros passos
 
 ```bash
-# Clone o repositório
-git clone https://github.com/Luis-Felipe-N/linktree-ui.git
-cd linktree-ui
-
-# Instale as dependências
+git clone https://github.com/Luis-Felipe-N/biosites.git
+cd biosites
 npm install
-
-# Configure as variáveis de ambiente
 cp .env.example .env.local
-
-# Execute o servidor de desenvolvimento
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
+> Landing em `http://localhost:3000`, auth em `/login` e estúdio em `/admin/<slug>/appearance`.
 
-## 📁 Estrutura do Projeto
+Scripts principais:
+
+- `npm run dev` – desenvolvimento com Turbopack.
+- `npm run build` – bundle otimizado para produção.
+- `npm run lint` – checagens ESLint + TypeScript.
+
+## Mapa do projeto
 
 ```
 src/
-├── app/
-│   ├── (auth)/          # Rotas de autenticação (login, register)
-│   ├── admin/           # Painel administrativo
-│   │   └── appearance/  # Editor de temas
-│   ├── layout.tsx       # Layout raiz com providers
-│   └── page.tsx         # Página inicial
-├── components/
-│   ├── appearance/      # Preview e geradores de tema
-│   ├── auth/            # Componentes de autenticação
-│   ├── style/           # Customizadores (cores, formas, raios)
-│   └── ui/              # Componentes base (shadcn/ui)
-├── contexts/
-│   ├── appearance.tsx   # Context de temas
-│   └── auth.tsx         # Context de autenticação
-├── hooks/
-│   └── use-appearance.tsx  # Hook de gerenciamento de temas
-└── lib/
-    ├── theme-presets.ts    # 9 presets profissionais
-    ├── types.ts            # TypeScript types
-    └── api/                # Configuração da API
+├─ app/
+│  ├─ (auth)/          fluxos de login/register
+│  ├─ admin/[slug]/    estúdio (appearance + links)
+│  └─ [slug]/          página pública
+├─ components/         ui, appearance, auth, admin, style
+├─ contexts/           auth, appearance, active-page
+├─ hooks/              use-pages, use-links, use-mobile
+├─ lib/                presets, api clients, prisma helpers
+└─ public/             assets e fontes
 ```
 
-## 🎨 Sistema de Temas
+## Customização
 
-### Presets Disponíveis
+O `AppearanceProvider` fornece métodos para presets e ajustes pontuais. Cada mudança dispara atualizações no preview e pode ser salva via `useUpdatePageTheme`.
 
-| Preset | Categoria | Cores | Características |
-|--------|-----------|-------|-----------------|
-| **New York** | Dark | Preto + Branco | Minimalista elegante |
-| **Buenos Aires** | Dark | Laranja + Amarelo | Vibrante e quente |
-| **Kyoto** | Dark | Roxo Escuro + Lavanda | Místico e suave |
-| **Vancouver** | Dark | Verde Militar + Lavanda | Natural e calmo |
-| **São Paulo** | Dark | Verde Escuro + Neon | Alto contraste urbano |
-| **Copenhagen** | Dark | Azul Marinho + Ciano | Moderno e tech |
-| **Lisbon** | Dark | Azul + Amarelo + Imagem | Português clássico |
-| **Melbourne** | Dark | Rosa + Creme + Imagem | Suave e artístico |
-| **Capetown** | Dark | Coral + Amarelo + Imagem | Tropical e alegre |
-
-### Uso do Context
-
-```typescript
-import { useAppearanceContext } from '@/contexts/appearance'
-
-function MyComponent() {
-  const { theme, loadPreset, updateBackground, updatebutton } = useAppearanceContext()
-
-  // Carregar um preset
-  const handleLoadPreset = () => {
-    loadPreset('new-york')
-  }
-
-  // Customizar background
-  const handleUpdateBackground = () => {
-    updateBackground({ 
-      color: '#FF0000',
-      type: 'COLOR' 
-    })
-  }
-
-  // Customizar botões
-  const handleUpdateButton = () => {
-    updatebutton({
-      type: 'FILL',
-      properties: {
-        backgroundColor: '#0000FF',
-        color: '#FFFFFF',
-        fontWeight: 600,
-        borderRadius: '24px'
-      }
-    })
-  }
-
-  return (
-    <div style={theme.background.properties}>
-      <h1 style={theme.typeface}>Meu Título</h1>
-      <button style={theme.button?.properties ?? undefined}>
-        Meu Botão
-      </button>
-    </div>
-  )
-}
+```
+loadPreset('new-york')
+updateBackground({ color: '#101828', type: 'COLOR' })
+updatebutton({
+  type: 'FILL',
+  properties: { borderRadius: '32px', boxShadow: '0 20px 30px -12px rgba(0,0,0,0.3)' }
+})
 ```
 
-### Estrutura de um Tema
+## APIs expostas
 
-```typescript
-type AppearanceTheme = {
-  key: string
-  editable: boolean
-  luminance: 'LIGHT' | 'DARK'
-  background: {
-    type: 'COLOR' | 'GRADIENT' | 'IMAGE'
-    color?: string
-    imageUrl?: string
-    properties: React.CSSProperties
-  }
-  button: {
-    type: 'FILL' | 'OUTLINE'
-    className?: string
-    properties: React.CSSProperties
-  }
-  typeface: {
-    color: string
-    family: string
-  }
-  // ... outros campos
-}
-```
+| Método | Rota | Uso |
+| --- | --- | --- |
+| `POST` | `/sessions` | autentica e retorna token + usuário |
+| `GET` | `/pages/:slug` | render pública / preview | 
+| `PUT` | `/pages/:id/theme` | salva customização |
+| `GET` | `/me/pages` | lista páginas do owner | 
+| `POST` | `/links/:id/click` | tracking de cliques |
 
-## 🤝 Contribuindo
+Clientes autenticados usam `api`; endpoints públicos usam `publicApi` para evitar redirects.
 
-Contribuições são sempre bem-vindas!
+## Contribuindo
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Faça fork e crie uma branch (`git checkout -b feature/minha-feature`).
+2. Rode testes/lint antes do PR.
+3. Abra pull request contra `main` com um resumo do que mudou.
 
-## 📝 Licença
+## Licença & Autor
 
-Este projeto está sob a licença MIT.
-
-## 👨‍💻 Autor
-
-**Luis Felipe Nunes**
-
-- GitHub: [@Luis-Felipe-N](https://github.com/Luis-Felipe-N)
-- LinkedIn: [Luis Felipe](https://www.linkedin.com/in/luis-felipe-n/)
-
----
+- MIT License
+- **Luis Felipe Nunes** – [GitHub](https://github.com/Luis-Felipe-N) · [LinkedIn](https://www.linkedin.com/in/luis-felipe-n/)
 
 <div align="center">
-  Feito com ❤️ e ☕ por Luis Felipe
+Feito com ❤️ e ☕
 </div>
 
